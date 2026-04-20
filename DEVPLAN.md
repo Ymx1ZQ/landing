@@ -135,16 +135,16 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [x] Remove hardcoded Italian chat references → point to SKILL.md.
 - [x] Remove external pipeline references (standalone skill).
 
-### M4 — `copy/` (Dunford landing copy)
-- [ ] `prompt.md`: port `landing-bot/system_prompt.md` — Dunford narrative (Insight → Alternatives → Perfect World → Introduction → Differentiated Value → Proof → Ask), PHASE 1/2 process.
-- [ ] `prompt.md`: add **named value buckets** rule (3 themed pillars, 1-3 features each).
-- [ ] `prompt.md`: add **specificity** rule (numeric claims when plausible).
-- [ ] `prompt.md`: add **headline variants** requirement (2-3 options + rationale).
-- [ ] `prompt.md`: add **contextual objections** + **CTA hierarchy** rules.
-- [ ] `prompt.md`: declare input = `value-proposition.md` in CWD; output = `copywriting.md` in CWD.
-- [ ] `prompt.md`: delegate language to SKILL.md.
-- [ ] `questions.md`: port `landing-bot/questions.md` (5 discovery questions) + add segment-confirmation question.
-- [ ] `template.md`: port `landing-bot/template.md` (HERO → SETUP → SHIFT → SOLUTION → VALUE PROPOSITION → SOCIAL PROOF → FAQ → FINAL CTA); update pillars to named buckets; add headline-variants block; add secondary CTA slot on hero.
+### M4 — `copy/` (Dunford landing copy) ✅
+- [x] `prompt.md`: port `landing-bot/system_prompt.md` — Dunford narrative (Insight → Alternatives → Perfect World → Introduction → Differentiated Value → Proof → Ask), PHASE 1/2 process.
+- [x] `prompt.md`: add **named value buckets** rule (3 themed pillars, 1-3 features each).
+- [x] `prompt.md`: add **specificity** rule (numeric claims when plausible).
+- [x] `prompt.md`: add **headline variants** requirement (2-3 options + rationale).
+- [x] `prompt.md`: add **contextual objections** + **CTA hierarchy** rules.
+- [x] `prompt.md`: declare input = `value-proposition.md` in CWD; output = `copywriting.md` in CWD.
+- [x] `prompt.md`: delegate language to SKILL.md.
+- [x] `questions.md`: port `landing-bot/questions.md` (5 discovery questions) + add segment-confirmation question.
+- [x] `template.md`: port `landing-bot/template.md` (HERO → SETUP → SHIFT → SOLUTION → VALUE PROPOSITION → SOCIAL PROOF → FAQ → FINAL CTA); update pillars to named buckets; add headline-variants block; add secondary CTA slot on hero.
 
 ### M5 — `html/` (assembly-based HTML generator)
 - [ ] `prompt.md`: rewrite as assembly instructions — load `skeleton.html`, select matching `snippets/*.html`, fill placeholders from `copywriting.md`.
