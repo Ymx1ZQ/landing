@@ -118,12 +118,12 @@ The original prompts were ported from earlier gems. These improvements, based on
 
 Note: no git remote configured — commits stay local. Push steps will be skipped; user can add a remote later.
 
-### M2 — `SKILL.md` (routing + language rules)
-- [ ] Frontmatter: `name: landing`, `description: <trigger covering vp/copy/html pipeline>`.
-- [ ] Language rules block.
-- [ ] Routing table with 3 branches + menu fallback.
-- [ ] Note on artifact pipeline (input filename expected in CWD per step).
-- [ ] Keep short — heavy content lives in subcommand prompts.
+### M2 — `SKILL.md` (routing + language rules) ✅
+- [x] Frontmatter: `name: landing`, `description: <trigger covering vp/copy/html pipeline>`.
+- [x] Language rules block.
+- [x] Routing table with 3 branches + menu fallback.
+- [x] Note on artifact pipeline (input filename expected in CWD per step).
+- [x] Keep short — heavy content lives in subcommand prompts.
 
 ### M3 — `vp/prompt.md`
 - [ ] Port the inline "Value Proposition Architect" prompt as the base.
