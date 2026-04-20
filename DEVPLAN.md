@@ -111,10 +111,12 @@ The original prompts were ported from earlier gems. These improvements, based on
 
 ## Milestones
 
-### M1 — Scaffold directory structure
-- [ ] Create `skill/` with subfolders `vp/`, `copy/`, `html/`, `html/snippets/`.
-- [ ] Create empty placeholder files per the layout.
-- [ ] Verify tree matches.
+### M1 — Scaffold directory structure ✅
+- [x] Create `skill/` with subfolders `vp/`, `copy/`, `html/`, `html/snippets/`.
+- [x] Create empty placeholder files per the layout.
+- [x] Verify tree matches.
+
+Note: no git remote configured — commits stay local. Push steps will be skipped; user can add a remote later.
 
 ### M2 — `SKILL.md` (routing + language rules)
 - [ ] Frontmatter: `name: landing`, `description: <trigger covering vp/copy/html pipeline>`.
