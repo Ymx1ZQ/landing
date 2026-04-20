@@ -155,11 +155,11 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [x] `skeleton.html`: write the full HTML shell — `<head>` with meta/SEO placeholders, `<style>` with `:root` variables, base typography, section alternation CSS, `.illustration-placeholder` CSS, dark-section rules, `<script>` with smooth scroll, counter animation, reveal on scroll, nav-scroll class toggle.
 - [x] `snippets/*.html`: write one file per section with `{{PLACEHOLDER}}` markers for copy. Each snippet is self-contained (no cross-references).
 
-### M6 — `install.sh` + `README.md`
-- [ ] Adapt `devplan/install.sh` to a single-target install: source `skill/` → dest `~/.claude/skills/landing/`.
-- [ ] Keep local/remote detection, `--force`, `--help`.
-- [ ] Print post-install summary with the three `/landing <cmd>` invocations and the pipeline order.
-- [ ] `README.md`: overview, install command, pipeline explanation (`vp → copy → html`), language rule summary.
+### M6 — `install.sh` + `README.md` ✅
+- [x] Adapt `devplan/install.sh` to a single-target install: source `skill/` → dest `~/.claude/skills/landing/`.
+- [x] Keep local/remote detection, `--force`, `--help`.
+- [x] Print post-install summary with the three `/landing <cmd>` invocations and the pipeline order.
+- [x] `README.md`: overview, install command, pipeline explanation (`vp → copy → html`), language rule summary.
 
 ### M7 — Smoke test
 - [ ] `bash install.sh` → verify `~/.claude/skills/landing/SKILL.md` exists + all subcommand files land correctly.
