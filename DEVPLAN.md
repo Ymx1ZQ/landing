@@ -146,14 +146,14 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [x] `questions.md`: port `landing-bot/questions.md` (5 discovery questions) + add segment-confirmation question.
 - [x] `template.md`: port `landing-bot/template.md` (HERO → SETUP → SHIFT → SOLUTION → VALUE PROPOSITION → SOCIAL PROOF → FAQ → FINAL CTA); update pillars to named buckets; add headline-variants block; add secondary CTA slot on hero.
 
-### M5 — `html/` (assembly-based HTML generator)
-- [ ] `prompt.md`: rewrite as assembly instructions — load `skeleton.html`, select matching `snippets/*.html`, fill placeholders from `copywriting.md`.
-- [ ] `prompt.md`: declare input = `copywriting.md` in CWD + FASE 0 setup answers; output = `index.html` in CWD.
-- [ ] `prompt.md`: preserve FASE 0 setup questions (Calendly, primary color, CTA text, tone, theme).
-- [ ] `mapping.md`: port `landing-html-gen/mapping-markdown-to-sections.md` — update to reference snippets explicitly.
-- [ ] `rules.md`: port `landing-html-gen/output-rules.md` — add SEO/meta checklist, accessibility checklist.
-- [ ] `skeleton.html`: write the full HTML shell — `<head>` with meta/SEO placeholders, `<style>` with `:root` variables, base typography, section alternation CSS, `.illustration-placeholder` CSS, dark-section rules, `<script>` with smooth scroll, counter animation, reveal on scroll, nav-scroll class toggle.
-- [ ] `snippets/*.html`: write one file per section with `{{PLACEHOLDER}}` markers for copy. Each snippet is self-contained (no cross-references).
+### M5 — `html/` (assembly-based HTML generator) ✅
+- [x] `prompt.md`: rewrite as assembly instructions — load `skeleton.html`, select matching `snippets/*.html`, fill placeholders from `copywriting.md`.
+- [x] `prompt.md`: declare input = `copywriting.md` in CWD + FASE 0 setup answers; output = `index.html` in CWD.
+- [x] `prompt.md`: preserve FASE 0 setup questions (Calendly, primary color, CTA text, tone, existing site/logo — 5 original questions).
+- [x] `mapping.md`: port `landing-html-gen/mapping-markdown-to-sections.md` — update to reference snippets explicitly.
+- [x] `rules.md`: port `landing-html-gen/output-rules.md` — add SEO/meta checklist, accessibility checklist.
+- [x] `skeleton.html`: write the full HTML shell — `<head>` with meta/SEO placeholders, `<style>` with `:root` variables, base typography, section alternation CSS, `.illustration-placeholder` CSS, dark-section rules, `<script>` with smooth scroll, counter animation, reveal on scroll, nav-scroll class toggle.
+- [x] `snippets/*.html`: write one file per section with `{{PLACEHOLDER}}` markers for copy. Each snippet is self-contained (no cross-references).
 
 ### M6 — `install.sh` + `README.md`
 - [ ] Adapt `devplan/install.sh` to a single-target install: source `skill/` → dest `~/.claude/skills/landing/`.
