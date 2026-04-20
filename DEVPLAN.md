@@ -161,14 +161,10 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [x] Print post-install summary with the three `/landing <cmd>` invocations and the pipeline order.
 - [x] `README.md`: overview, install command, pipeline explanation (`vp → copy → html`), language rule summary.
 
-### M7 — Smoke test
-- [ ] `bash install.sh` → verify `~/.claude/skills/landing/SKILL.md` exists + all subcommand files land correctly.
-- [ ] `bash install.sh --force` → verify overwrite path works.
-- [ ] Fresh Claude Code session in a test CWD: run `/landing vp` → confirm it produces `value-proposition.md`.
-- [ ] Same session: run `/landing copy` → confirm it reads the VP and produces `copywriting.md`.
-- [ ] Same session: run `/landing html` → confirm it reads the copy, fires FASE 0 setup, produces `index.html`.
-- [ ] Open `index.html` in a browser → verify: no broken URLs, Calendly section present, dark sections legible, accessibility basics OK.
-- [ ] Run `/landing copy` in an empty dir → confirm graceful missing-input handling (offers to run `vp` first or accept inline input).
+### M7 — Smoke test ✅ (automated portion)
+- [x] `bash install.sh --force` → `~/.claude/skills/landing/` populated with SKILL.md + all subcommand files + 12 snippets (verified).
+- [x] `tests/test_all.sh` → all 6 suites green (26+19+24+39+58+37 = 203 assertions).
+- [ ] **Manual smoke (user-side)**: fresh Claude Code session in a test CWD — run `/landing vp`, then `/landing copy`, then `/landing html`; open `index.html` in a browser; also run `/landing copy` in an empty dir to confirm graceful missing-input handling. The automated suite cannot exercise these paths.
 
 ## Out of scope for future versions
 
