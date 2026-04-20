@@ -174,3 +174,44 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - Automated artifact translation.
 - Versioning / update detection in installer.
 - Brand asset ingestion (logo extraction, palette auto-detect from URL).
+
+---
+
+# v0.2 milestones (append)
+
+### M8 — GTM placeholder + user-provided conversion embed with framing-aware copy ✅
+
+**Why**: v0.1 hard-wires the conversion section to Calendly (real or mock). Real landings use varied mechanisms — booking tools, contact forms, HubSpot embeds, Typeform, Tally. Also, every production landing needs Google Tag Manager. Both additions need to plug in without adding complexity.
+
+**Approach**: one configurable slot — the user pastes a URL or an HTML snippet, the skill renders it. Copy framing is decided upstream in `/landing copy` (binary: *booking* vs *contact*) so the hero/final/conversion section speaks the right language.
+
+**GTM**: standard two-snippet pattern with one `{{GTM_ID}}`. Both blocks omitted entirely if no ID is provided — never render a mock / fake GTM.
+
+**Tasks**
+
+- [ ] **copy/prompt.md** — add a PHASE 1 question: "Is the primary conversion a *scheduled call* (Calendly / SavvyCal / Cal.com / similar) or a *contact form* (Formspree / HubSpot / Typeform / Tally / custom backend)?". Binary answer drives copy choices throughout the artifact:
+  - Booking → "Book a demo", "Pick a time that works", "See the product live"
+  - Contact → "Get in touch", "We'll reply within 24h", "Tell us about your use case"
+- [ ] **copy/questions.md** — add Q7 "Conversion mechanism" with the same binary + suggestion format.
+- [ ] **copy/template.md** — hero Primary CTA / FINAL CTA button now carries a `<!-- framing: booking | contact -->` hint and guidance copy that reflects the mechanism. Keep it a single slot — don't duplicate the section.
+- [ ] **html/prompt.md** — rewrite FASE 0 question #1 from "do you have a Calendly?" to:
+  > **Conversion embed**: paste the URL or HTML for your conversion widget.
+  > Examples: `https://calendly.com/you/demo`, a Formspree `<form>` snippet, a Typeform/Tally `<iframe>`, or leave empty for a visual mock.
+- [ ] **html/prompt.md** — add FASE 0 question for **GTM ID** (`GTM-XXXXXXX`, optional).
+- [ ] **html/prompt.md** — add detection logic:
+  - Input matches `^https://(calendly|savvycal|cal)\.com/` → wrap in the Calendly-style widget snippet (generic booking widget), substitute color.
+  - Input contains `<` (form/iframe/embed HTML) → paste verbatim inside the wrapper (never reformat).
+  - Empty → use mock.
+- [ ] **html/snippets/conversion.html** — NEW. Single flexible snippet replacing `calendly-real.html` + `calendly-mock.html`. Placeholders:
+  - `{{CONVERSION_TITLE}}`, `{{CONVERSION_LEAD}}` (copy, framing-aware)
+  - `{{CONVERSION_EMBED}}` (the pasted widget / iframe / form, or the mock block)
+  - Section id stays `calendly` for backward compatibility of existing `#calendly` anchors — or rename anchors to `contact` / `book`? **Decision**: rename to `id="convert"` and update all snippet anchors (`nav.html`, `hero.html`, `final-cta.html`) to point to `#convert`. `#calendly` as an id is now semantically wrong.
+- [ ] **html/snippets/** — delete `calendly-real.html` and `calendly-mock.html` (subsumed by `conversion.html`).
+- [ ] **html/skeleton.html** — add GTM placeholders:
+  - In `<head>`, right after `<title>` block: the GTM `<script>` loader wrapped in `{{#GTM_HEAD}} ... {{/GTM_HEAD}}` markers (remove block entirely if no ID).
+  - Right after `<body>`: the `<noscript><iframe ...>` GTM fallback wrapped in `{{#GTM_BODY}} ... {{/GTM_BODY}}` markers.
+- [ ] **html/mapping.md** — replace `calendly-real | calendly-mock` rows with single `conversion.html` row; document framing-aware copy; document GTM conditional.
+- [ ] **html/rules.md** — add the GTM pre-compiled verbatim blocks (head + body) with `{{GTM_ID}}`; add URL-hygiene check for the GTM iframe src; update the final checklist.
+- [ ] **tests/test_html.sh** — update snippet enumeration (drop calendly-real/mock, add conversion.html). Add checks: skeleton contains GTM marker patterns; snippets use `#convert` anchor; conversion.html has `{{CONVERSION_EMBED}}`.
+- [ ] **tests/test_copy.sh** — add contract: prompt + questions cover the booking-vs-contact binary; template carries the framing hint.
+- [ ] **Smoke** — re-run `bash tests/test_all.sh`; run a real install; spot-check an `index.html` with a Calendly URL, a form HTML, and empty (mock), with and without a GTM ID.

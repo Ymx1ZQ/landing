@@ -73,6 +73,14 @@ The hero has **two CTAs**:
 
 The FINAL CTA stays single and assertive.
 
+### Framing: booking vs contact
+The **conversion mechanism** the user ends up with changes the language across the whole page. In PHASE 1, ask which one applies (see `questions.md` Q7):
+
+- **Booking** — a scheduled call (Calendly, SavvyCal, Cal.com, similar). The customer picks a time themselves. Language: *"Book a demo"*, *"Pick a time that works"*, *"See the product live"*, *"30 minutes with our team"*. Urgency leans on scarcity of slots and speed to value.
+- **Contact** — a contact form or lead capture (Formspree, HubSpot, Typeform, Tally, custom backend). The company replies later. Language: *"Get in touch"*, *"We'll reply within 24h"*, *"Tell us about your use case"*, *"Leave your details"*. Urgency leans on responsiveness and no commitment.
+
+Apply the framing everywhere it matters: hero primary CTA, hero secondary CTA microcopy, conversion-section title and sub-copy, FINAL CTA button and microcopy, objection handling near the CTA. In the `copywriting.md` output, include an HTML comment near the FINAL CTA block recording the chosen framing (`<!-- framing: booking -->` or `<!-- framing: contact -->`) so the `/landing html` stage can cross-check.
+
 ### Copy hygiene
 - Active voice.
 - Customer's language, not internal jargon.

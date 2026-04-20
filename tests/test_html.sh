@@ -140,7 +140,7 @@ fi
 echo ""
 echo "=== M5: html/snippets/*.html ==="
 
-for name in nav hero problem features stats testimonial integration faq calendly-real calendly-mock final-cta footer; do
+for name in nav hero problem features stats testimonial integration faq conversion final-cta footer; do
     f="$HTML_DIR/snippets/$name.html"
     if [ ! -s "$f" ]; then
         echo "  FAIL: snippet $name.html is empty"
@@ -150,9 +150,6 @@ for name in nav hero problem features stats testimonial integration faq calendly
     # Must contain at least one {{PLACEHOLDER}} OR be a complete static snippet (calendly-mock/footer may be more static)
     if grep -qE '\{\{[A-Z_0-9]+\}\}' "$f"; then
         echo "  PASS: $name.html has {{PLACEHOLDER}} markers"
-        PASS=$((PASS + 1))
-    elif [ "$name" = "calendly-mock" ]; then
-        echo "  PASS: $name.html (static mock, no placeholders required)"
         PASS=$((PASS + 1))
     else
         echo "  FAIL: $name.html has no {{PLACEHOLDER}} markers"
@@ -170,9 +167,65 @@ for name in nav hero problem features stats testimonial integration faq calendly
     fi
 done
 
-# Calendly-real must contain the exact widget URL template
-g "$HTML_DIR/snippets/calendly-real.html" 'calendly-inline-widget' "calendly-real: inline widget class"
-gf "$HTML_DIR/snippets/calendly-real.html" 'https://assets.calendly.com/assets/external/widget.js' "calendly-real: widget.js CDN"
+# conversion.html contracts
+g "$HTML_DIR/snippets/conversion.html" 'CONVERSION_EMBED' "conversion: embed placeholder"
+g "$HTML_DIR/snippets/conversion.html" 'CONVERSION_TITLE' "conversion: title placeholder"
+g "$HTML_DIR/snippets/conversion.html" 'id="convert"' "conversion: section id=convert"
+
+# Removed snippets must no longer exist
+for old in calendly-real calendly-mock; do
+    if [ -f "$HTML_DIR/snippets/$old.html" ]; then
+        echo "  FAIL: obsolete $old.html still present"
+        FAIL=$((FAIL + 1))
+    else
+        echo "  PASS: obsolete $old.html removed"
+        PASS=$((PASS + 1))
+    fi
+done
+
+# Anchor rename: snippets point to #convert, not #calendly
+for snip in nav hero final-cta; do
+    if grep -qF '#calendly' "$HTML_DIR/snippets/$snip.html"; then
+        echo "  FAIL: $snip.html still references obsolete #calendly anchor"
+        FAIL=$((FAIL + 1))
+    else
+        echo "  PASS: $snip.html has no #calendly anchor"
+        PASS=$((PASS + 1))
+    fi
+    if grep -qF '#convert' "$HTML_DIR/snippets/$snip.html"; then
+        echo "  PASS: $snip.html uses #convert anchor"
+        PASS=$((PASS + 1))
+    else
+        echo "  FAIL: $snip.html missing #convert anchor"
+        FAIL=$((FAIL + 1))
+    fi
+done
+
+# Skeleton: GTM marker blocks (wrap with {{#GTM_HEAD}} / {{/GTM_HEAD}} and body pair)
+if grep -qE '\{\{#GTM_HEAD\}\}' "$SKEL" && grep -qE '\{\{/GTM_HEAD\}\}' "$SKEL"; then
+    echo "  PASS: skeleton has GTM_HEAD marker block"
+    PASS=$((PASS + 1))
+else
+    echo "  FAIL: skeleton missing GTM_HEAD marker block"
+    FAIL=$((FAIL + 1))
+fi
+if grep -qE '\{\{#GTM_BODY\}\}' "$SKEL" && grep -qE '\{\{/GTM_BODY\}\}' "$SKEL"; then
+    echo "  PASS: skeleton has GTM_BODY marker block"
+    PASS=$((PASS + 1))
+else
+    echo "  FAIL: skeleton missing GTM_BODY marker block"
+    FAIL=$((FAIL + 1))
+fi
+
+# html/prompt.md must cover GTM + conversion embed + detection logic
+g "$PROMPT" 'GTM|Google Tag Manager' "prompt: covers GTM"
+g "$PROMPT" 'conversion embed|embed' "prompt: covers conversion embed"
+g "$PROMPT" 'calendly\.com|savvycal|cal\.com' "prompt: detection — booking URL"
+g "$PROMPT" 'form|iframe|HTML' "prompt: detection — pasted HTML"
+
+# rules.md must include the GTM pre-compiled blocks
+g "$RULES" 'GTM|Google Tag Manager' "rules: covers GTM"
+g "$RULES" 'googletagmanager\.com' "rules: GTM loader URL"
 
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="

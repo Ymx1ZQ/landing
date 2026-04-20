@@ -60,7 +60,7 @@ assert_file "$TARGET/html/prompt.md"
 assert_file "$TARGET/html/mapping.md"
 assert_file "$TARGET/html/rules.md"
 assert_file "$TARGET/html/skeleton.html"
-for name in nav hero problem features stats testimonial integration faq calendly-real calendly-mock final-cta footer; do
+for name in nav hero problem features stats testimonial integration faq conversion final-cta footer; do
     assert_file "$TARGET/html/snippets/$name.html"
 done
 cleanup "$FAKE_HOME"

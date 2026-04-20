@@ -43,6 +43,10 @@ else
     g "$PROMPT" 'headline.*(variant|option|alternative)' "rule: headline variants"
     g "$PROMPT" 'objection' "rule: objection handling"
     g "$PROMPT" '(primary|secondary).*CTA|CTA.*hierarchy' "rule: CTA hierarchy"
+    # Booking vs contact framing
+    g "$PROMPT" 'booking|scheduled call' "rule: booking framing"
+    g "$PROMPT" 'contact form|contact|reply|get back' "rule: contact framing"
+    g "$PROMPT" 'conversion mechanism|framing' "rule: conversion mechanism / framing"
     # I/O
     g "$PROMPT" 'value-proposition\.md' "input: value-proposition.md"
     g "$PROMPT" 'copywriting\.md' "output: copywriting.md"
@@ -59,13 +63,13 @@ echo "=== M4: copy/questions.md ==="
 
 if [ ! -s "$QUESTIONS" ]; then echo "  FAIL: questions.md empty"; FAIL=$((FAIL+1))
 else
-    # At least 6 numbered questions (5 original + segment confirmation)
+    # At least 7 numbered questions (5 original + segment + conversion mechanism)
     count=$(grep -cE '^###[[:space:]]+[0-9]+\.' "$QUESTIONS" || true)
-    if [ "$count" -ge 6 ]; then
-        echo "  PASS: at least 6 numbered discovery questions ($count)"
+    if [ "$count" -ge 7 ]; then
+        echo "  PASS: at least 7 numbered discovery questions ($count)"
         PASS=$((PASS + 1))
     else
-        echo "  FAIL: expected >=6 numbered questions, found $count"
+        echo "  FAIL: expected >=7 numbered questions, found $count"
         FAIL=$((FAIL + 1))
     fi
     g "$QUESTIONS" 'alternatives?|status quo|enemy' "covers: alternatives / status quo"
@@ -74,6 +78,14 @@ else
     g "$QUESTIONS" 'proof|social proof|testimonial|logo|numbers' "covers: social proof"
     g "$QUESTIONS" 'CTA|call to action|offer' "covers: CTA / offer"
     g "$QUESTIONS" 'segment' "covers: segment confirmation"
+    g "$QUESTIONS" 'booking|scheduled call|calendly' "covers: booking option"
+    g "$QUESTIONS" 'contact form|formspree|hubspot|typeform|tally' "covers: contact option"
+fi
+
+echo ""
+echo "=== M8: copy/template.md (framing hint) ==="
+if [ -s "$TEMPLATE" ]; then
+    g "$TEMPLATE" 'framing|booking|contact' "template: framing hint in CTA section"
 fi
 
 echo ""

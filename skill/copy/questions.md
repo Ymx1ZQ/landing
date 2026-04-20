@@ -29,3 +29,9 @@ If the user has not provided the information below — via `value-proposition.md
 - **Question:** The `value-proposition.md` file identifies <Segment X> as the primary segment. Is this landing page still aimed specifically at <X>? If multiple segments are relevant, pick **one** for this artifact — secondary segments are noted for separate future runs.
 - *Why it's needed:* Dunford's rule — one pitch, one segment. A landing page that tries to address multiple segments will serve none.
 - *Agent suggestion format:* "I'll write the landing aimed at <X>. Confirm?"
+
+### 7. Conversion Mechanism (Booking vs Contact)
+- **Question:** What's the primary conversion on this page — a **scheduled call** (Calendly, SavvyCal, Cal.com, or similar) or a **contact form** (Formspree, HubSpot, Typeform, Tally, or custom backend)?
+- *Why it's needed:* The copy for hero CTAs, the conversion section, and the FINAL CTA changes entirely based on this. Booking → *"Book a demo", "Pick a time"*. Contact → *"Get in touch", "We'll reply within 24h"*.
+- *Agent suggestion format:* "Based on your value proposition and segment I'd guess <booking / contact>. Confirm, or switch?"
+- *Downstream:* `/landing html` will ask you to paste the actual embed URL/HTML in FASE 0. This question is only about the *framing* the copy should adopt.

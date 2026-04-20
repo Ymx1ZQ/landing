@@ -14,7 +14,7 @@ The assembled page uses this order. Missing sections are simply skipped — neve
 6. **testimonial** (if present) — `snippets/testimonial.html`  · bg: `#F5F5F7`
 7. **integration** (if present) — `snippets/integration.html`  · bg: `#FFFFFF`
 8. **faq** (if present) — `snippets/faq.html`  · bg: `#F5F5F7`
-9. **calendly** (always) — `snippets/calendly-real.html` **or** `snippets/calendly-mock.html` (FASE 0 choice)  · `id="calendly"`, bg: `#FFFFFF`
+9. **conversion** (always) — `snippets/conversion.html`  · `id="convert"`, bg: `#FFFFFF`
 10. **final-cta** (always) — `snippets/final-cta.html`  · bg: `#1D1D1F` (dark)
 11. **footer** (always) — `snippets/footer.html`  · bg: `#1D1D1F` (dark)
 
@@ -56,10 +56,16 @@ For each section below, if the pattern is present in `copywriting.md`, include t
 - Include if OBJECTION HANDLING has at least one Q/A pair not already handled inline.
 - `<details>/<summary>` accordion with rotating chevron.
 
-### calendly → `calendly-real.html` | `calendly-mock.html` (always)
-- Always included with `id="calendly"`.
-- **Real** (FASE 0 gave a Calendly URL): use `calendly-real.html`, filling `{{CALENDLY_ACCOUNT}}`, `{{CALENDLY_EVENT}}`, `{{PRIMARY_HEX_NO_HASH}}`. The widget URL format is documented in `rules.md`.
-- **Mock** (no URL provided): use `calendly-mock.html` unchanged.
+### conversion → `conversion.html` (always)
+- Always included with `id="convert"`.
+- Placeholders: `{{CONVERSION_TITLE}}`, `{{CONVERSION_LEAD}}`, `{{CONVERSION_EMBED}}`.
+- Title and lead come from `copywriting.md` and must match the **framing** recorded in the FINAL CTA block (`<!-- framing: booking -->` or `<!-- framing: contact -->`):
+  - **Booking framing** → title e.g. *"Book a demo"*, lead pointing to the calendar.
+  - **Contact framing** → title e.g. *"Let's talk"*, lead pointing to the form.
+- `{{CONVERSION_EMBED}}` is built in the `/landing html` prompt's detection logic:
+  - Booking URL (Calendly / SavvyCal / Cal.com) → the vendor's verbatim inline-widget block, colours adapted.
+  - Raw HTML (form / iframe / vendor embed) → pasted verbatim.
+  - Empty → visual mock, re-labelled per the framing.
 
 ### final-cta → `final-cta.html` (always)
 - Source: `FINAL CTA` block in `copywriting.md`.

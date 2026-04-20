@@ -56,7 +56,7 @@ assert_file "$SKILL/html/skeleton.html"
 
 # html/snippets/
 assert_dir  "$SKILL/html/snippets"
-for name in nav hero problem features stats testimonial integration faq calendly-real calendly-mock final-cta footer; do
+for name in nav hero problem features stats testimonial integration faq conversion final-cta footer; do
     assert_file "$SKILL/html/snippets/$name.html"
 done
 

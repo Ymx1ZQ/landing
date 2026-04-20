@@ -33,11 +33,42 @@ Do not reformat, do not wrap in markdown syntax, do not add brackets. That line 
 ```
 
 Only permitted substitutions:
-- `ACCOUNT` → the Calendly account handle provided in FASE 0
-- `EVENT` → the event name provided in FASE 0
+- `ACCOUNT` → the Calendly account handle extracted from the URL provided in FASE 0
+- `EVENT` → the event name extracted from the URL provided in FASE 0
 - `0071e3` → the primary brand colour **without** the leading `#`
 
 Everything else is immutable.
+
+### Google Tag Manager — paste verbatim in the skeleton's `{{#GTM_HEAD}}` and `{{#GTM_BODY}}` blocks
+
+Only if a GTM ID was provided in FASE 0. If not, delete both marker blocks from the skeleton entirely.
+
+**GTM head block** — goes in `<head>` (the skeleton already positions it right before the Font Awesome CDN):
+
+```
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+<!-- End Google Tag Manager -->
+```
+
+**GTM body fallback** — goes immediately after `<body>`:
+
+```
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+```
+
+Only permitted substitution: replace `GTM-XXXXXXX` with the user-provided ID (format is a literal `GTM-` followed by 6-8 alphanumerics). Everything else is immutable. The `googletagmanager.com` URLs must appear verbatim — no brackets, no markdown syntax.
+
+### Conversion embed — detection & wrapping
+
+The `/landing html` prompt describes the detection branches (booking URL / raw HTML / empty). Key rule: a raw HTML snippet provided by the user (form, iframe, embed script) is pasted **verbatim** — that is the single exception to the "no external resources" rule, because it is the user's own widget.
 
 ## URL hygiene (browser, not markdown parser)
 

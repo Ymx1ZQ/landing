@@ -119,8 +119,10 @@ A: [Answer framing price as investment / savings]
 
 ## FINAL CTA
 
+<!-- framing: booking | contact  (pick one, write the chosen tag into the output) -->
+
 **Headline:**
-[E.g., "Ready to [desired outcome]?"]
+[Booking framing → e.g., "Ready to see [product] live?"  ·  Contact framing → e.g., "Let's talk about your [problem]"]
 
 **Subheadline:**
 [Final reminder of why to act now — urgency, scarcity, or simple momentum.]
