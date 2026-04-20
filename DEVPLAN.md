@@ -125,15 +125,15 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [x] Note on artifact pipeline (input filename expected in CWD per step).
 - [x] Keep short — heavy content lives in subcommand prompts.
 
-### M3 — `vp/prompt.md`
-- [ ] Port the inline "Value Proposition Architect" prompt as the base.
-- [ ] Add **Positioning Foundations** interview block (5 fields).
-- [ ] Add **Segments** discovery (multi-segment → pick primary).
-- [ ] Add **Point of View** block.
-- [ ] Rewrite the output template to include: Positioning, POV, Segment(s), VP, Problem, Solution, Benefits, Target Users, MVP Scope, Constraints.
-- [ ] Enforce filename: output must be `value-proposition.md` in CWD.
-- [ ] Remove hardcoded Italian chat references → point to SKILL.md.
-- [ ] Remove S02-S10 pipeline references (standalone skill).
+### M3 — `vp/prompt.md` ✅
+- [x] Port the inline "Value Proposition Architect" prompt as the base.
+- [x] Add **Positioning Foundations** interview block (5 fields).
+- [x] Add **Segments** discovery (multi-segment → pick primary).
+- [x] Add **Point of View** block.
+- [x] Rewrite the output template to include: Positioning, POV, Segment(s), VP, Problem, Solution, Benefits, Target Users, MVP Scope, Constraints.
+- [x] Enforce filename: output must be `value-proposition.md` in CWD.
+- [x] Remove hardcoded Italian chat references → point to SKILL.md.
+- [x] Remove external pipeline references (standalone skill).
 
 ### M4 — `copy/` (Dunford landing copy)
 - [ ] `prompt.md`: port `landing-bot/system_prompt.md` — Dunford narrative (Insight → Alternatives → Perfect World → Introduction → Differentiated Value → Proof → Ask), PHASE 1/2 process.
