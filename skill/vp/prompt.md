@@ -33,6 +33,14 @@ Where you can find leverage, the strongest copy hook lives at the highest level 
 **D. Segments**
 - Ask: "Are there multiple segments that would buy this?" If yes, help the user pick **one primary segment** for this landing page. List the others for future runs (do not try to address them in the same artifact). One pitch = one segment.
 
+Once the primary segment is picked, drill down — these fields feed the downstream `/landing copy` and `/landing review` stages. Propose plausible drafts based on what you already know; let the user correct.
+
+- **Sponsor**: the person inside the buyer organization who feels the pain daily. Often *not* the same as the budget owner. Capture role + the concrete pain context that fills their week.
+- **Decision Maker**: the person with signature authority — who signs the contract or releases the budget. Capture role + signs.what.
+- **Top 3 Pains**: three specific, concrete pain points the Sponsor lives with. Quantify when plausible ("3 hours/week reconciling spreadsheets" beats "saves time"). No abstract categories.
+- **Top 3 Gains**: three outcomes the Sponsor and the Decision Maker *want* after the problem is solved — not generic upside, specific gains (savings, recognition, peace of mind, audit-ready posture, time recovered).
+- **Top 3 known Objections**: three verbatim phrases the buyer says to push back ("isn't this just a wrapper around ChatGPT?", "we already have a person doing this", "what about my data leaving the EU"). These are gold for `/landing review` — capture them as they sound, not in marketing-speak.
+
 **E. Point of View (POV)**
 - An industry-level thesis: what's changing in the market, and why the status quo is no longer enough. Not a tactical "insight" — a stance the company is willing to be loud about. Propose a candidate POV and iterate with the user.
 
@@ -108,6 +116,20 @@ Write the file `value-proposition.md` to the CWD using the template below. Use t
 ## Primary Segment
 - **Who:** <role + company type + buying trigger>
 - **Why them first:** <why this segment has the sharpest pain and the shortest path to value>
+- **Sponsor:** <role inside the buyer org who feels the pain daily — what their week looks like>
+- **Decision Maker:** <role with signature authority — what they sign for>
+- **Top 3 Pains:**
+  - <Pain 1 — specific, quantified when plausible>
+  - <Pain 2>
+  - <Pain 3>
+- **Top 3 Gains:**
+  - <Gain 1 — concrete outcome, not generic upside>
+  - <Gain 2>
+  - <Gain 3>
+- **Top 3 known Objections:**
+  - <Objection 1 — verbatim phrasing the buyer would use>
+  - <Objection 2>
+  - <Objection 3>
 - **Other segments noted for later:** <list — not addressed in this artifact>
 
 ## Problem

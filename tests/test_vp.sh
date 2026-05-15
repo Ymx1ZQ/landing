@@ -104,6 +104,15 @@ assert_grep 'subtract|honestly claim|commodity' "M11 interview: subtraction step
 assert_grep 'USP statement' "M11 template: USP statement line"
 assert_grep 'status[- ]quo workaround|workarounds.*not.*direct' "M11 interview: alternatives vs direct competitors clarification"
 
+# M12 — Enriched ICP (Sponsor / DM / Pains / Gains / Objections)
+assert_grep 'Sponsor' "M12: Sponsor field"
+assert_grep 'Decision Maker' "M12: Decision Maker field"
+assert_grep 'daily pain|feels the pain daily|pain daily' "M12 interview: Sponsor distinction (daily pain)"
+assert_grep 'signature authority|signs the contract|signs.*budget' "M12 interview: DM distinction (signs)"
+assert_grep 'Top 3 Pains' "M12: Top 3 Pains field"
+assert_grep 'Top 3 Gains' "M12: Top 3 Gains field"
+assert_grep 'Top 3.*Objection|known Objection' "M12: Top 3 Objections field"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

@@ -282,12 +282,12 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 **Approach**: Inside the existing "C. Segments" interview block of `vp/prompt.md`, after the primary-segment pick, add five additional sub-fields scoped to the primary segment only: Sponsor (role + daily pain context), Decision Maker (role + signature authority), Top 3 Pains (specific, quantified when possible), Top 3 Gains (desired outcomes), Top 3 known Objections (verbatim phrases the buyer says to push back). Extend the output template's `## Primary Segment` section accordingly. Do NOT add "Channel" (marketing scope, out of positioning).
 
 **Tasks**:
-- [ ] Edit `skill/vp/prompt.md`: extend Segments interview with Sponsor / Decision Maker / Top 3 Pains / Top 3 Gains / Top 3 Objections (each with example phrasings and propose-default discipline).
-- [ ] Edit `skill/vp/prompt.md`: extend the output template's `## Primary Segment` section with the five new sub-fields.
-- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`Sponsor`, `Decision Maker`, `Top 3 Pains`, `Top 3 Gains`, `Objections`).
-- [ ] Run `bash tests/test_all.sh` and confirm green.
-- [ ] Run `./install.sh --force` to redeploy.
-- [ ] Commit: `M12: enriched ICP (Sponsor/DM + Pains/Gains/Objections) ✅`.
+- [x] Edit `skill/vp/prompt.md`: extend Segments interview with Sponsor / Decision Maker / Top 3 Pains / Top 3 Gains / Top 3 Objections (each with example phrasings and propose-default discipline).
+- [x] Edit `skill/vp/prompt.md`: extend the output template's `## Primary Segment` section with the five new sub-fields.
+- [x] Add assertions in `tests/test_vp.sh` for the new patterns (`Sponsor`, `Decision Maker`, `Top 3 Pains`, `Top 3 Gains`, `Objections`).
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force` to redeploy.
+- [x] Commit: `M12: enriched ICP (Sponsor/DM + Pains/Gains/Objections) ✅`.
 
 **Done when**: tests green; the five new fields are documented in both the interview block and the output template; the deployed skill reflects the change.
 
