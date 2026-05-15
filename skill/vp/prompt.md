@@ -15,8 +15,9 @@ Collect every field below. Do **not** skip a field because the user mentioned th
 - One-paragraph description (what it does, today)
 
 **B. Positioning foundations** (April Dunford — *Obviously Awesome*)
-- **Competitive alternatives**: what would the customer use if the product didn't exist? (Often a spreadsheet, an intern, a legacy tool, or "doing nothing" — not always a direct competitor.)
+- **Competitive alternatives**: what would the customer use if the product didn't exist? (Often a spreadsheet, an intern, a legacy tool, or "doing nothing" — typically a status-quo workaround, not always a direct competitor.)
 - **Unique attributes**: what the product *has* that the alternatives don't — features, data, integrations, team, process.
+- **USP subtraction check** (Venn `(A ∩ B) \ C`): name 2-3 **direct competitors** by name for the chosen segment (these can be *different* from the "Competitive alternatives" above — alternatives are status-quo workarounds, direct competitors are vendors targeting the same buyer with the same intent). For each Unique attribute, ask: *can the named direct competitor honestly claim the same?* Strike anything they can — that's commodity. What survives is the USP. Condense the surviving attributes into a single **USP statement** sentence: "what customers want, that we deliver, that no named direct competitor delivers".
 - **Value**: the benefit those attributes unlock for the customer. One attribute → one clear value.
 - **Target customer characteristics**: the shortlist of traits that make someone care *a lot* about that value (role, company size, stack, maturity, pain severity). Not demographics — buying signals.
 - **Market category**: the frame of reference the customer will use to evaluate you. Pick a category the customer already understands.
@@ -87,6 +88,9 @@ Write the file `value-proposition.md` to the CWD using the template below. Use t
 - <Attribute 1 → Value it unlocks>
 - <Attribute 2 → Value it unlocks>
 - <Attribute 3 → Value it unlocks>
+
+### USP statement
+<One sentence — output of the subtraction step in the Positioning interview: "what customers want, that we deliver, that no named direct competitor delivers". Name the surviving attribute(s), not the framework.>
 
 ### Target customer characteristics
 - <Trait that makes someone care a lot>

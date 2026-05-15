@@ -263,13 +263,13 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 **Approach**: Do NOT add a separate `## USP` output section — it would duplicate `## Value delivered` and bloat the artifact. Instead, extend the existing Positioning interview with a **subtraction step** placed right after Unique attributes: ask the user to name 2-3 *direct competitors* by name for the chosen segment, then for each unique attribute force a binary "can the named competitor honestly claim the same?". Attributes that survive go into Value delivered as before; commodity attributes are dropped or rewritten. Add a single new field `USP statement` at the end of the Positioning output template — one sentence: "what customers want, that we deliver, that no named competitor delivers". This is the codified output of the subtraction.
 
 **Tasks**:
-- [ ] Edit `skill/vp/prompt.md`: in the Positioning interview, add the subtraction step after Unique attributes (name 2-3 direct competitors; binary check per attribute; drop commodity).
-- [ ] Edit `skill/vp/prompt.md`: extend the Positioning output template with a `USP statement` line (single sentence) placed after `Value delivered`.
-- [ ] Edit `skill/vp/prompt.md`: clarify in the interview that "Competitive alternatives" are status-quo workarounds (often not direct competitors), while the subtraction step uses direct competitors — the two lists can differ.
-- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`USP statement`, `direct competitor`, subtraction wording).
-- [ ] Run `bash tests/test_all.sh` and confirm green.
-- [ ] Run `./install.sh --force` to redeploy.
-- [ ] Commit: `M11: USP Venn subtraction in vp/prompt.md ✅`.
+- [x] Edit `skill/vp/prompt.md`: in the Positioning interview, add the subtraction step after Unique attributes (name 2-3 direct competitors; binary check per attribute; drop commodity).
+- [x] Edit `skill/vp/prompt.md`: extend the Positioning output template with a `USP statement` line (single sentence) placed after `Value delivered`.
+- [x] Edit `skill/vp/prompt.md`: clarify in the interview that "Competitive alternatives" are status-quo workarounds (often not direct competitors), while the subtraction step uses direct competitors — the two lists can differ.
+- [x] Add assertions in `tests/test_vp.sh` for the new patterns (`USP statement`, `direct competitor`, subtraction wording).
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force` to redeploy.
+- [x] Commit: `M11: USP Venn subtraction in vp/prompt.md ✅`.
 
 **Done when**: tests green; the subtraction step is documented in the Positioning interview; the output template has a `USP statement` line after `Value delivered`.
 

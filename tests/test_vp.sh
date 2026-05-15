@@ -98,6 +98,12 @@ assert_grep 'outcome-led|outcome.led' "M10 one-liner: outcome-led angle"
 assert_grep 'mechanism-led|mechanism.led' "M10 one-liner: mechanism-led angle"
 assert_grep 'alternative-led|alternative.led' "M10 one-liner: alternative-led angle"
 
+# M11 — USP Venn subtraction (interview + template)
+assert_grep 'direct competitor' "M11 interview: direct competitors wording"
+assert_grep 'subtract|honestly claim|commodity' "M11 interview: subtraction step wording"
+assert_grep 'USP statement' "M11 template: USP statement line"
+assert_grep 'status[- ]quo workaround|workarounds.*not.*direct' "M11 interview: alternatives vs direct competitors clarification"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]
