@@ -88,6 +88,16 @@ assert_grep 'Recurring deliverables' "M9 interview: recurring deliverables per t
 assert_grep 'Non-fit segments|non-fit' "M9 interview: non-fit segments field"
 assert_grep 'Public-Voice Guardrails' "M9 template: section heading"
 
+# M10 — JTBD 3-level (interview + template + one-liner self-critique)
+assert_grep 'Jobs to Be Done|JTBD' "M10 interview: JTBD block header"
+assert_grep 'functional' "M10 interview: functional job level"
+assert_grep 'emotional' "M10 interview: emotional job level"
+assert_grep 'social' "M10 interview: social job level"
+assert_grep '## Jobs to Be Done' "M10 template: section heading"
+assert_grep 'outcome-led|outcome.led' "M10 one-liner: outcome-led angle"
+assert_grep 'mechanism-led|mechanism.led' "M10 one-liner: mechanism-led angle"
+assert_grep 'alternative-led|alternative.led' "M10 one-liner: alternative-led angle"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

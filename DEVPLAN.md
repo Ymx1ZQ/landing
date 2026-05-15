@@ -244,13 +244,13 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 **Approach**: Add a new interview block "Jobs to Be Done" inside Step 1 of `vp/prompt.md`, between "B. Positioning foundations" and "C. Segments". Three sub-fields: functional (required), emotional (optional, propose a default; user may skip), social (optional, same). Extend the output template with a `## Jobs to Be Done` section listing the three levels (omit lines whose value is empty — keeps the artifact tight when only functional is filled). Internal-check addition: in the VP one-liner generation step, instruct the AI to silently evaluate its own draft against three angles (outcome-led / mechanism-led / alternative-led) and pick the strongest — internal critique, no extra artifact for the user.
 
 **Tasks**:
-- [ ] Edit `skill/vp/prompt.md`: add JTBD interview block (functional required + emotional/social optional, follow propose-default discipline already in the prompt).
-- [ ] Edit `skill/vp/prompt.md`: extend the output template with a `## Jobs to Be Done` section (3 sub-lines, omit empty ones).
-- [ ] Edit `skill/vp/prompt.md`: in the VP one-liner generation step, add the internal three-angle self-critique instruction (outcome-led / mechanism-led / alternative-led; pick strongest; no extra output).
-- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`Jobs to Be Done`, `functional`, `emotional`, `social`, three-angle wording).
-- [ ] Run `bash tests/test_all.sh` and confirm green.
-- [ ] Run `./install.sh --force` to redeploy.
-- [ ] Commit: `M10: JTBD 3-level in vp/prompt.md ✅`.
+- [x] Edit `skill/vp/prompt.md`: add JTBD interview block (functional required + emotional/social optional, follow propose-default discipline already in the prompt).
+- [x] Edit `skill/vp/prompt.md`: extend the output template with a `## Jobs to Be Done` section (3 sub-lines, omit empty ones).
+- [x] Edit `skill/vp/prompt.md`: in the VP one-liner generation step, add the internal three-angle self-critique instruction (outcome-led / mechanism-led / alternative-led; pick strongest; no extra output).
+- [x] Add assertions in `tests/test_vp.sh` for the new patterns (`Jobs to Be Done`, `functional`, `emotional`, `social`, three-angle wording).
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force` to redeploy.
+- [x] Commit: `M10: JTBD 3-level in vp/prompt.md ✅`.
 
 **Done when**: `bash tests/test_all.sh` green; the new JTBD section is present both in the interview block and the output template of `skill/vp/prompt.md`; `~/.claude/skills/landing/vp/prompt.md` reflects the source.
 

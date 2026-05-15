@@ -21,18 +21,26 @@ Collect every field below. Do **not** skip a field because the user mentioned th
 - **Target customer characteristics**: the shortlist of traits that make someone care *a lot* about that value (role, company size, stack, maturity, pain severity). Not demographics — buying signals.
 - **Market category**: the frame of reference the customer will use to evaluate you. Pick a category the customer already understands.
 
-**C. Segments**
+**C. Jobs to Be Done** (Christensen — three levels of customer pull)
+The job is what the customer "hires" the product to do — not the feature it offers. Climb from the physical task to the deepest pull. **Functional is required; emotional and social are optional but strongly preferred** (propose a candidate and let the user skip if it doesn't land).
+- **Functional job** (required): the concrete task. Use the form *"When I [situation], I want to [task], so I can [outcome]"*.
+- **Emotional job** (optional): how the customer wants to feel during or after the task — relieved, in control, proud, respected, no longer anxious.
+- **Social job** (optional): how the customer wants to be seen by their boss, peers, board, regulator, clients.
+
+Where you can find leverage, the strongest copy hook lives at the highest level the user is willing to defend.
+
+**D. Segments**
 - Ask: "Are there multiple segments that would buy this?" If yes, help the user pick **one primary segment** for this landing page. List the others for future runs (do not try to address them in the same artifact). One pitch = one segment.
 
-**D. Point of View (POV)**
+**E. Point of View (POV)**
 - An industry-level thesis: what's changing in the market, and why the status quo is no longer enough. Not a tactical "insight" — a stance the company is willing to be loud about. Propose a candidate POV and iterate with the user.
 
-**E. Operational scope (for the MVP section)**
+**F. Operational scope (for the MVP section)**
 - MVP scope (what must ship in v1 to be viable)
 - Key benefits (3 max, user-visible)
 - Constraints: technical (e.g., must integrate with AD), business (e.g., budget < $X), regulatory (e.g., GDPR)
 
-**F. Public-voice guardrails (feeds directly into downstream stages)**
+**G. Public-voice guardrails (feeds directly into downstream stages)**
 Capture these now to prevent retroactive stripping later. The `copy` stage (`questions.md` Q8–Q11) and `kitchen.md` depend on them. Propose defaults, let the user edit.
 
 - **Vendors/internal names NOT to mention publicly**: AI provider names (e.g., "Claude", "OpenAI"), client-specific ERP/CRM (e.g., "Odoo", "Salesforce"), internal skill/project codenames. These are `kitchen.md` class-7 violations in public copy.
@@ -43,6 +51,8 @@ Capture these now to prevent retroactive stripping later. The `copy` stage (`que
 ### Step 2 — Confirm
 
 Before generating the file, summarize your understanding in 6–10 bullets covering the five foundations + POV + primary segment + VP one-liner. If the idea is still vague, present 2–3 options (A/B/C) for the weakest field and ask the user to choose. **Wait for explicit confirmation** before writing the file.
+
+**One-liner self-critique (internal, do NOT surface three variants to the user)**: before showing the proposed VP one-liner in the summary, silently draft three candidate framings — **outcome-led** (lead with the value the customer gets), **mechanism-led** (lead with the unique mechanism you use), **alternative-led** (lead with what you replace) — pick the strongest by your own judgment, and present only that one in the summary. The user iterates with you on the chosen wording; the three angles are scaffolding, not an artifact.
 
 ### Step 3 — Generate
 
@@ -85,6 +95,11 @@ Write the file `value-proposition.md` to the CWD using the template below. Use t
 
 ## Point of View
 <2–4 sentences. The industry-level thesis: what is shifting, why the old way no longer works, what the new reality demands. This is the "we believe" statement the brand is willing to defend publicly.>
+
+## Jobs to Be Done
+- **Functional:** <When I [situation], I want to [task], so I can [outcome].>
+- **Emotional:** <how the customer wants to feel — omit this line if not captured.>
+- **Social:** <how the customer wants to be seen — omit this line if not captured.>
 
 ## Primary Segment
 - **Who:** <role + company type + buying trigger>
