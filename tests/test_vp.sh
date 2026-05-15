@@ -80,6 +80,14 @@ assert_grep 'SKILL\.md|router|language rules' "delegates language to SKILL.md"
 # Must NOT reference retired S02-S10 pipeline
 assert_nogrep 'S0[2-9]|S10' "no references to S02-S10 pipeline"
 
+# M9 — Public-voice guardrails section (interview + template)
+assert_grep 'Public-voice guardrails' "M9 interview: F section header"
+assert_grep 'Vendors.*NOT to mention|NOT to mention.*publicly' "M9 interview: vendors-not-to-mention field"
+assert_grep 'Trigger event' "M9 interview: trigger event field"
+assert_grep 'Recurring deliverables' "M9 interview: recurring deliverables per tier field"
+assert_grep 'Non-fit segments|non-fit' "M9 interview: non-fit segments field"
+assert_grep 'Public-Voice Guardrails' "M9 template: section heading"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

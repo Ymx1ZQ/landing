@@ -32,6 +32,14 @@ Collect every field below. Do **not** skip a field because the user mentioned th
 - Key benefits (3 max, user-visible)
 - Constraints: technical (e.g., must integrate with AD), business (e.g., budget < $X), regulatory (e.g., GDPR)
 
+**F. Public-voice guardrails (feeds directly into downstream stages)**
+Capture these now to prevent retroactive stripping later. The `copy` stage (`questions.md` Q8–Q11) and `kitchen.md` depend on them. Propose defaults, let the user edit.
+
+- **Vendors/internal names NOT to mention publicly**: AI provider names (e.g., "Claude", "OpenAI"), client-specific ERP/CRM (e.g., "Odoo", "Salesforce"), internal skill/project codenames. These are `kitchen.md` class-7 violations in public copy.
+- **Trigger event** — the concrete "Monday morning" scene that makes a buyer reach out (2 sentences, who/what/deadline). Fuels the `TRIGGER STORY` block.
+- **Recurring deliverables per tier** — the tangible artifact that lands in the buyer's inbox/workspace on a cadence, per pricing tier (if tiered). Fuels the pricing cards' deliverable rows.
+- **Non-fit segments (exclusions)** — 3 specific buyer profiles who should self-exclude. Fuels the `NOT FOR WHO` block.
+
 ### Step 2 — Confirm
 
 Before generating the file, summarize your understanding in 6–10 bullets covering the five foundations + POV + primary segment + VP one-liner. If the idea is still vague, present 2–3 options (A/B/C) for the weakest field and ask the user to choose. **Wait for explicit confirmation** before writing the file.
@@ -105,6 +113,26 @@ Write the file `value-proposition.md` to the CWD using the template below. Use t
 - **Technical:** <e.g., must integrate with AD>
 - **Business:** <e.g., budget < $100k>
 - **Regulatory:** <e.g., GDPR compliance>
+
+## Public-Voice Guardrails
+
+### Vendors & internal names NOT to mention publicly
+- <e.g., AI provider names like "Claude" / "OpenAI" — use "AI" instead>
+- <e.g., client-specific ERP/CRM like "Odoo" / "Salesforce" — use "your ERP"/"your CRM">
+- <e.g., internal skill/project codenames — expand or omit>
+
+### Trigger Event
+<A concrete 2-sentence "Monday morning" scene that captures the moment a buyer decides to reach out. Specific: who said what, what email arrived, what the deadline is. Avoid abstractions.>
+
+### Recurring deliverables per tier
+- **<Tier 1 name>:** <concrete artifact + cadence — e.g., "Weekly Monday email with cash projection and scheduled payments">
+- **<Tier 2 name>:** <e.g., "+ Monthly margin report by the 10th of the month">
+- **<Tier 3 name>:** <e.g., "+ Quarterly board pack PDF">
+
+### Non-fit segments (explicit exclusions)
+- <Exclusion 1 — pattern + one-line why>
+- <Exclusion 2>
+- <Exclusion 3>
 ---
 ~~~
 

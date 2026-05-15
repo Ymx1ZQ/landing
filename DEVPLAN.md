@@ -215,3 +215,105 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - [ ] **tests/test_html.sh** — update snippet enumeration (drop calendly-real/mock, add conversion.html). Add checks: skeleton contains GTM marker patterns; snippets use `#convert` anchor; conversion.html has `{{CONVERSION_EMBED}}`.
 - [ ] **tests/test_copy.sh** — add contract: prompt + questions cover the booking-vs-contact binary; template carries the framing hint.
 - [ ] **Smoke** — re-run `bash tests/test_all.sh`; run a real install; spot-check an `index.html` with a Calendly URL, a form HTML, and empty (mock), with and without a GTM ID.
+
+### M9 — Sync source `vp/prompt.md` from installed orphan edits
+
+**Why**: The installed copy at `~/.claude/skills/landing/vp/prompt.md` contains additions not present in the source tree — a "Public-voice guardrails" section in the interview (vendors NOT to mention, trigger event, recurring deliverables per tier, non-fit segments) and a matching "Public-Voice Guardrails" section in the output template. Those edits were made directly on the installed copy in a previous session (violating the "edit source, never installed" rule). They are well-formed, additive, and have already been used in production on the the pilot client value proposition — losing them via `./install.sh --force` would be a regression. The remaining M10-M13 milestones each end with `./install.sh --force`, so the source must be brought in line first.
+
+**Approach**: Patch `skill/vp/prompt.md` to include exactly the orphan additions currently present in `~/.claude/skills/landing/vp/prompt.md` — same placement (Step 1 section F, output template after Constraints), same wording. After the patch, `diff source installed` must be empty. No other changes to the source. Extend `tests/test_vp.sh` with assertions for the new patterns so the regression is locked in going forward.
+
+**Tasks**:
+- [x] Add assertions in `tests/test_vp.sh` for the orphan patterns (`Public-voice guardrails`, `Vendors`, `Trigger event`, `Recurring deliverables`, `Non-fit segments`). Run and confirm RED.
+- [x] Edit `skill/vp/prompt.md`: append section F "Public-voice guardrails" to Step 1 (after section E) — verbatim from installed copy.
+- [x] Edit `skill/vp/prompt.md`: append the `Public-Voice Guardrails` section to the output template (after `## Constraints`) — verbatim from installed copy.
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `diff ~/Documents/software/skills/landing/skill/vp/prompt.md ~/.claude/skills/landing/vp/prompt.md` — must be empty.
+- [x] Run `./install.sh --force` to redeploy (idempotent at this point).
+- [x] Commit: `M9: sync vp/prompt.md source from installed orphan edits ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; `diff source installed` is empty; subsequent milestones can safely run `./install.sh --force` without losing content.
+
+**Notes**: This milestone exists only to repair a one-time drift; future development must go through source per CLAUDE.md skill-editing rules.
+
+---
+
+### M10 — JTBD 3-level in `vp/prompt.md` (Camcom W1 integration)
+
+**Why**: The current `Problem` field captures the pain generically. Workshop 1 (Camcom) frames the customer pull as a Job To Be Done at three levels — Functional (the physical task), Emotional (how they want to feel), Social (how they want to be seen). The highest-level job is where the strongest pull sits and where the sharpest copy hooks live. The VP today does not surface emotional/social jobs explicitly, so they get reinvented (or lost) downstream in `/landing copy`.
+
+**Approach**: Add a new interview block "Jobs to Be Done" inside Step 1 of `vp/prompt.md`, between "B. Positioning foundations" and "C. Segments". Three sub-fields: functional (required), emotional (optional, propose a default; user may skip), social (optional, same). Extend the output template with a `## Jobs to Be Done` section listing the three levels (omit lines whose value is empty — keeps the artifact tight when only functional is filled). Internal-check addition: in the VP one-liner generation step, instruct the AI to silently evaluate its own draft against three angles (outcome-led / mechanism-led / alternative-led) and pick the strongest — internal critique, no extra artifact for the user.
+
+**Tasks**:
+- [ ] Edit `skill/vp/prompt.md`: add JTBD interview block (functional required + emotional/social optional, follow propose-default discipline already in the prompt).
+- [ ] Edit `skill/vp/prompt.md`: extend the output template with a `## Jobs to Be Done` section (3 sub-lines, omit empty ones).
+- [ ] Edit `skill/vp/prompt.md`: in the VP one-liner generation step, add the internal three-angle self-critique instruction (outcome-led / mechanism-led / alternative-led; pick strongest; no extra output).
+- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`Jobs to Be Done`, `functional`, `emotional`, `social`, three-angle wording).
+- [ ] Run `bash tests/test_all.sh` and confirm green.
+- [ ] Run `./install.sh --force` to redeploy.
+- [ ] Commit: `M10: JTBD 3-level in vp/prompt.md ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; the new JTBD section is present both in the interview block and the output template of `skill/vp/prompt.md`; `~/.claude/skills/landing/vp/prompt.md` reflects the source.
+
+---
+
+### M11 — USP Venn subtraction step in Positioning
+
+**Why**: The current `vp/prompt.md` collects "Competitive alternatives" and "Unique attributes" but never forces the explicit subtraction `(A ∩ B) \ C` — i.e. "what customers want AND we do well AND competitors do not already do". Without that subtraction, the Unique-attributes list often contains commodity capabilities that competitors can match. The Venn check sharpens data we already collect, without introducing a parallel framework.
+
+**Approach**: Do NOT add a separate `## USP` output section — it would duplicate `## Value delivered` and bloat the artifact. Instead, extend the existing Positioning interview with a **subtraction step** placed right after Unique attributes: ask the user to name 2-3 *direct competitors* by name for the chosen segment, then for each unique attribute force a binary "can the named competitor honestly claim the same?". Attributes that survive go into Value delivered as before; commodity attributes are dropped or rewritten. Add a single new field `USP statement` at the end of the Positioning output template — one sentence: "what customers want, that we deliver, that no named competitor delivers". This is the codified output of the subtraction.
+
+**Tasks**:
+- [ ] Edit `skill/vp/prompt.md`: in the Positioning interview, add the subtraction step after Unique attributes (name 2-3 direct competitors; binary check per attribute; drop commodity).
+- [ ] Edit `skill/vp/prompt.md`: extend the Positioning output template with a `USP statement` line (single sentence) placed after `Value delivered`.
+- [ ] Edit `skill/vp/prompt.md`: clarify in the interview that "Competitive alternatives" are status-quo workarounds (often not direct competitors), while the subtraction step uses direct competitors — the two lists can differ.
+- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`USP statement`, `direct competitor`, subtraction wording).
+- [ ] Run `bash tests/test_all.sh` and confirm green.
+- [ ] Run `./install.sh --force` to redeploy.
+- [ ] Commit: `M11: USP Venn subtraction in vp/prompt.md ✅`.
+
+**Done when**: tests green; the subtraction step is documented in the Positioning interview; the output template has a `USP statement` line after `Value delivered`.
+
+---
+
+### M12 — Enriched ICP in Primary Segment (Sponsor ≠ DM, Pains, Gains, Objections)
+
+**Why**: The current "Primary Segment" captures who + why-first + other-segments-noted. It does not separate the **Sponsor** (the person who feels the pain daily) from the **Decision Maker** (who signs), nor does it capture explicit Pain/Gain/Objections — fields the downstream `/landing review` (M13) needs to anchor its critique to specific buyer concerns. The the pilot client session showed concretely that Sponsor (responsabile amministrativo / CFO) and DM (imprenditore) are often distinct in PMI; the copy needs to address both voices.
+
+**Approach**: Inside the existing "C. Segments" interview block of `vp/prompt.md`, after the primary-segment pick, add five additional sub-fields scoped to the primary segment only: Sponsor (role + daily pain context), Decision Maker (role + signature authority), Top 3 Pains (specific, quantified when possible), Top 3 Gains (desired outcomes), Top 3 known Objections (verbatim phrases the buyer says to push back). Extend the output template's `## Primary Segment` section accordingly. Do NOT add "Channel" (marketing scope, out of positioning).
+
+**Tasks**:
+- [ ] Edit `skill/vp/prompt.md`: extend Segments interview with Sponsor / Decision Maker / Top 3 Pains / Top 3 Gains / Top 3 Objections (each with example phrasings and propose-default discipline).
+- [ ] Edit `skill/vp/prompt.md`: extend the output template's `## Primary Segment` section with the five new sub-fields.
+- [ ] Add assertions in `tests/test_vp.sh` for the new patterns (`Sponsor`, `Decision Maker`, `Top 3 Pains`, `Top 3 Gains`, `Objections`).
+- [ ] Run `bash tests/test_all.sh` and confirm green.
+- [ ] Run `./install.sh --force` to redeploy.
+- [ ] Commit: `M12: enriched ICP (Sponsor/DM + Pains/Gains/Objections) ✅`.
+
+**Done when**: tests green; the five new fields are documented in both the interview block and the output template; the deployed skill reflects the change.
+
+---
+
+### M13 — `/landing review` subcommand (4th stage of the pipeline)
+
+**Why**: Once copy is generated by `/landing copy`, the user has no structured way to stress-test it through the eyes of the actual buyer. A free-form "review it for me" call relies on whatever lens the AI improvises. A dedicated subcommand that loads the enriched ICP from `value-proposition.md` and reads `copywriting.md` in role can deliver a sharper, repeatable critique — and surface specific objections the copy fails to address, anchored to concrete Pains/Gains/Objections from M12. Single lens = the Decision Maker of the primary segment, coherent with the skill's "one pitch = one segment" principle.
+
+**Approach**: Add a new subcommand `/landing review`. Folder layout: `skill/review/prompt.md` (single self-contained file, sibling-folder isolation per current skill convention). Reads `value-proposition.md` + `copywriting.md` from CWD. Writes `copy-review.md` to CWD with three sections: **What smells off** (verbatim copy quotes + buyer's reaction), **Why I'm not buying yet** (3-5 explicit objections), **What would convince me** (gap analysis + 2-3 targeted rewrite candidates for the most toxic lines). Every objection raised must be anchored to a specific Pain / Gain / known Objection from the VP — if it cannot be anchored, drop or sharpen. Tone: severe and lucid, not constructive-at-all-costs; if the copy holds, say so. Graceful inline ICP-collection: if `value-proposition.md` lacks the M12 fields (Sponsor / Pains / Gains / Objections), the prompt collects them inline in a short interview before generating — does NOT ask the user to re-run `/landing vp`. Update `skill/SKILL.md` router to add the fourth pipeline row, the fourth dispatch line, and the fourth menu entry.
+
+**Tasks**:
+- [ ] Create `skill/review/` folder.
+- [ ] Write `skill/review/prompt.md`: load instructions (read `value-proposition.md` + `copywriting.md` from CWD); graceful inline ICP-collection when VP pre-M12; three-section output spec (What smells off / Why I'm not buying yet / What would convince me + rewrites); single-lens enforcement (DM only); objection-anchoring rule (each objection links to a Pain / Gain / known Objection from VP, otherwise drop); output filename `copy-review.md` in CWD; language follows SKILL.md.
+- [ ] Edit `skill/SKILL.md`: add `/landing review` row to the pipeline table (Reads: `value-proposition.md` + `copywriting.md`; Writes: `copy-review.md`); add `review` to the routing dispatch list; extend the 3-line menu to 4 lines.
+- [ ] Create `tests/test_review.sh`: structural assertions on `skill/review/prompt.md` (filename declared; three sections referenced; single-lens enforced; objection-anchoring rule present; graceful inline-collection for missing ICP present). Mirror the `assert_grep` style of `tests/test_vp.sh`.
+- [ ] Edit `tests/test_all.sh`: add `run test_review.sh` after `run test_copy.sh`.
+- [ ] Edit `tests/test_skill.sh`: add assertions for the 4th routing line and the 4-entry menu.
+- [ ] Edit `tests/test_install.sh`: add a check that `~/.claude/skills/landing/review/prompt.md` is present after install.
+- [ ] Run `bash tests/test_all.sh` and confirm green.
+- [ ] Run `./install.sh --force` to redeploy.
+- [ ] Commit: `M13: /landing review subcommand ✅`.
+
+**Done when**: `bash tests/test_all.sh` green (now 7 suites including `test_review.sh`); `~/.claude/skills/landing/review/prompt.md` deployed; the installed `SKILL.md` lists 4 subcommands in the pipeline table and the menu.
+
+**Notes**:
+- Downstream `copy/prompt.md` is intentionally not updated in this plan to consume the enriched ICP — separate future work. Existing `value-proposition.md` files (pre-M12) remain valid input for `/landing copy` (graceful absence of new fields).
+- The review critiques `copywriting.md` only; reviewing `index.html` is out of scope (HTML is a rendering of the same copy — critique the source, not the rendering).
+- The `value-proposition.md` already generated for the pilot client (under `<client-site-dir>/`) is pre-M12 — after this plan ships it can either be retrofitted by hand or regenerated via `/landing vp`. Not blocking; out of scope of these milestones.
