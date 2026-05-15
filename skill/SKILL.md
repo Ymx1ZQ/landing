@@ -1,11 +1,11 @@
 ---
 name: landing
-description: Build a landing page in three staged artifacts — value proposition, long-form copy (April Dunford's Sales Pitch framework), and a standalone Apple-inspired HTML file. Use `/landing vp` to discover positioning and produce `value-proposition.md`, `/landing copy` to turn it into `copywriting.md`, and `/landing html` to assemble `index.html`. Each step reads the previous artifact from the current working directory.
+description: Build a landing page in four staged artifacts — value proposition, long-form copy (April Dunford's Sales Pitch framework), a standalone Apple-inspired HTML file, and a buyer-eyes copy review. Use `/landing vp` to discover positioning and produce `value-proposition.md`, `/landing copy` to turn it into `copywriting.md`, `/landing html` to assemble `index.html`, and `/landing review` to stress-test the copy through the Decision Maker's eyes and produce `copy-review.md`. Each step reads the previous artifact(s) from the current working directory.
 ---
 
 # Landing — Router
 
-This skill builds a landing page in three stages. Each stage produces a file that feeds the next.
+This skill builds a landing page in four stages. The first three form the build pipeline; the fourth is a buyer-eyes review of the copy.
 
 ## Artifact pipeline
 
@@ -13,11 +13,12 @@ All artifacts land in the user's **current working directory** (CWD) with fixed 
 
 | Command | Reads (CWD) | Writes (CWD) |
 |---|---|---|
-| `/landing vp`   | user interview                               | `value-proposition.md` |
-| `/landing copy` | `value-proposition.md`                       | `copywriting.md` |
-| `/landing html` | `copywriting.md` + setup answers             | `index.html` |
+| `/landing vp`     | user interview                                                    | `value-proposition.md` |
+| `/landing copy`   | `value-proposition.md`                                            | `copywriting.md` |
+| `/landing html`   | `copywriting.md` + setup answers                                  | `index.html` |
+| `/landing review` | `value-proposition.md` + `copywriting.md`                         | `copy-review.md` |
 
-If the required input file is missing from CWD, stop and offer the user two paths: (a) run the previous subcommand first, or (b) paste the content inline. Never invent input silently.
+If a required input file is missing from CWD, stop and offer the user two paths: (a) run the upstream subcommand first, or (b) paste the content inline. Never invent input silently.
 
 ## Language rules (apply to every subcommand)
 
@@ -32,10 +33,12 @@ Parse the first argument after `/landing`:
 - `vp` → read `vp/prompt.md` and follow it end-to-end.
 - `copy` → read `copy/prompt.md`, `copy/questions.md`, `copy/template.md` and follow them end-to-end.
 - `html` → read `html/prompt.md`, `html/mapping.md`, `html/rules.md`, `html/skeleton.html`, and the relevant files under `html/snippets/` (lazy-load: only the snippets matching sections present in `copywriting.md`). Follow `prompt.md` end-to-end.
-- **no argument, or an unknown argument** → show this 3-line menu and ask which one to run:
-  - `vp`   — discover positioning, point of view, target segment; write `value-proposition.md`
-  - `copy` — turn the value proposition into long-form Dunford-style copy; write `copywriting.md`
-  - `html` — assemble a standalone Apple-inspired landing page; write `index.html`
+- `review` → read `review/prompt.md` and follow it end-to-end. Reads `value-proposition.md` + `copywriting.md` from CWD and produces `copy-review.md`.
+- **no argument, or an unknown argument** → show this 4-line menu and ask which one to run:
+  - `vp`     — discover positioning, point of view, target segment; write `value-proposition.md`
+  - `copy`   — turn the value proposition into long-form Dunford-style copy; write `copywriting.md`
+  - `html`   — assemble a standalone Apple-inspired landing page; write `index.html`
+  - `review` — stress-test the copy through the Decision Maker's eyes; write `copy-review.md`
 
 ## Subcommand isolation
 

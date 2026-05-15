@@ -60,6 +60,10 @@ for name in nav hero problem features stats testimonial integration faq conversi
     assert_file "$SKILL/html/snippets/$name.html"
 done
 
+# review/ (M13)
+assert_dir  "$SKILL/review"
+assert_file "$SKILL/review/prompt.md"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

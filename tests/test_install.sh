@@ -60,6 +60,7 @@ assert_file "$TARGET/html/prompt.md"
 assert_file "$TARGET/html/mapping.md"
 assert_file "$TARGET/html/rules.md"
 assert_file "$TARGET/html/skeleton.html"
+assert_file "$TARGET/review/prompt.md"
 for name in nav hero problem features stats testimonial integration faq conversion final-cta footer; do
     assert_file "$TARGET/html/snippets/$name.html"
 done

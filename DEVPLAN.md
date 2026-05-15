@@ -300,16 +300,16 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 **Approach**: Add a new subcommand `/landing review`. Folder layout: `skill/review/prompt.md` (single self-contained file, sibling-folder isolation per current skill convention). Reads `value-proposition.md` + `copywriting.md` from CWD. Writes `copy-review.md` to CWD with three sections: **What smells off** (verbatim copy quotes + buyer's reaction), **Why I'm not buying yet** (3-5 explicit objections), **What would convince me** (gap analysis + 2-3 targeted rewrite candidates for the most toxic lines). Every objection raised must be anchored to a specific Pain / Gain / known Objection from the VP — if it cannot be anchored, drop or sharpen. Tone: severe and lucid, not constructive-at-all-costs; if the copy holds, say so. Graceful inline ICP-collection: if `value-proposition.md` lacks the M12 fields (Sponsor / Pains / Gains / Objections), the prompt collects them inline in a short interview before generating — does NOT ask the user to re-run `/landing vp`. Update `skill/SKILL.md` router to add the fourth pipeline row, the fourth dispatch line, and the fourth menu entry.
 
 **Tasks**:
-- [ ] Create `skill/review/` folder.
-- [ ] Write `skill/review/prompt.md`: load instructions (read `value-proposition.md` + `copywriting.md` from CWD); graceful inline ICP-collection when VP pre-M12; three-section output spec (What smells off / Why I'm not buying yet / What would convince me + rewrites); single-lens enforcement (DM only); objection-anchoring rule (each objection links to a Pain / Gain / known Objection from VP, otherwise drop); output filename `copy-review.md` in CWD; language follows SKILL.md.
-- [ ] Edit `skill/SKILL.md`: add `/landing review` row to the pipeline table (Reads: `value-proposition.md` + `copywriting.md`; Writes: `copy-review.md`); add `review` to the routing dispatch list; extend the 3-line menu to 4 lines.
-- [ ] Create `tests/test_review.sh`: structural assertions on `skill/review/prompt.md` (filename declared; three sections referenced; single-lens enforced; objection-anchoring rule present; graceful inline-collection for missing ICP present). Mirror the `assert_grep` style of `tests/test_vp.sh`.
-- [ ] Edit `tests/test_all.sh`: add `run test_review.sh` after `run test_copy.sh`.
-- [ ] Edit `tests/test_skill.sh`: add assertions for the 4th routing line and the 4-entry menu.
-- [ ] Edit `tests/test_install.sh`: add a check that `~/.claude/skills/landing/review/prompt.md` is present after install.
-- [ ] Run `bash tests/test_all.sh` and confirm green.
-- [ ] Run `./install.sh --force` to redeploy.
-- [ ] Commit: `M13: /landing review subcommand ✅`.
+- [x] Create `skill/review/` folder.
+- [x] Write `skill/review/prompt.md`: load instructions (read `value-proposition.md` + `copywriting.md` from CWD); graceful inline ICP-collection when VP pre-M12; three-section output spec (What smells off / Why I'm not buying yet / What would convince me + rewrites); single-lens enforcement (DM only); objection-anchoring rule (each objection links to a Pain / Gain / known Objection from VP, otherwise drop); output filename `copy-review.md` in CWD; language follows SKILL.md.
+- [x] Edit `skill/SKILL.md`: add `/landing review` row to the pipeline table (Reads: `value-proposition.md` + `copywriting.md`; Writes: `copy-review.md`); add `review` to the routing dispatch list; extend the 3-line menu to 4 lines.
+- [x] Create `tests/test_review.sh`: structural assertions on `skill/review/prompt.md` (filename declared; three sections referenced; single-lens enforced; objection-anchoring rule present; graceful inline-collection for missing ICP present). Mirror the `assert_grep` style of `tests/test_vp.sh`.
+- [x] Edit `tests/test_all.sh`: add `run test_review.sh` after `run test_copy.sh`.
+- [x] Edit `tests/test_skill.sh`: add assertions for the 4th routing line and the 4-entry menu.
+- [x] Edit `tests/test_install.sh`: add a check that `~/.claude/skills/landing/review/prompt.md` is present after install.
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force` to redeploy.
+- [x] Commit: `M13: /landing review subcommand ✅`.
 
 **Done when**: `bash tests/test_all.sh` green (now 7 suites including `test_review.sh`); `~/.claude/skills/landing/review/prompt.md` deployed; the installed `SKILL.md` lists 4 subcommands in the pipeline table and the menu.
 

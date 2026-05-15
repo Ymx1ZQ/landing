@@ -82,9 +82,11 @@ assert_grep '[Ee]nglish' "body mentions English default"
 assert_grep '\bvp\b' "routes vp"
 assert_grep '\bcopy\b' "routes copy"
 assert_grep '\bhtml\b' "routes html"
+assert_grep '\breview\b' "routes review (M13)"
 assert_grep 'vp/prompt\.md' "points to vp/prompt.md"
 assert_grep 'copy/prompt\.md' "points to copy/prompt.md"
 assert_grep 'html/prompt\.md' "points to html/prompt.md"
+assert_grep 'review/prompt\.md' "points to review/prompt.md (M13)"
 
 # Fallback for missing / unknown arg
 assert_grep '[Nn]o arg|no argument|missing|unknown|menu' "handles missing/unknown arg"
@@ -93,6 +95,7 @@ assert_grep '[Nn]o arg|no argument|missing|unknown|menu' "handles missing/unknow
 assert_grep 'value-proposition\.md' "mentions value-proposition.md artifact"
 assert_grep 'copywriting\.md' "mentions copywriting.md artifact"
 assert_grep 'index\.html' "mentions index.html artifact"
+assert_grep 'copy-review\.md' "mentions copy-review.md artifact (M13)"
 
 # CWD reference
 assert_grep '[Cc]urrent working directory|CWD|cwd' "references CWD for artifacts"
