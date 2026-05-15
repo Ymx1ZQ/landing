@@ -106,8 +106,48 @@ The `<head>` must always include:
 - `<meta property="og:title" content="...">` — same value as `<title>` or slightly shorter.
 - `<meta property="og:description" content="...">` — same or same-as-description.
 - `<meta property="og:type" content="website">`.
+- `<meta property="og:url" content="...">` — canonical URL from FASE 0 Q11. Mandatory.
+- `<meta property="og:image" content="...">` — OG image from FASE 0 Q12 (1200×630 ideal); fallback to wide brand logo with a `<!-- TODO: og:image should be 1200x630 -->` comment if not provided. Mandatory: a landing without `og:image` produces an empty preview when shared on LinkedIn/WhatsApp/Discord/Slack.
+- `<meta name="twitter:card" content="summary_large_image">` + `twitter:title`, `twitter:description`, `twitter:image` — mirror the OG values.
 
 Do not synthesize false metadata — extract from the copy.
+
+## Footer link rules (M14)
+
+The footer snippet has three placeholders — `{{PRIVACY_LINK}}`, `{{TERMS_LINK}}`, `{{CONTACT_LINK}}` — that you fill at assembly time based on FASE 0 Q7-Q9.
+
+- **URL provided** → emit `<a href="{{URL}}">Privacy</a>` (or `Termini`, `Contatti`).
+- **URL empty** (Privacy / Terms) → emit `<a href="#" class="disabled-link" aria-disabled="true" data-todo="privacy-url-pending">Privacy (in arrivo)</a>`. The `.disabled-link` class is in skeleton CSS and visually distinguishes the placeholder. **Never emit a bare `href="#"` without `data-todo` + `aria-disabled="true"`.**
+- **Contact email empty** → omit the link AND place an HTML comment `<!-- TODO: contact email not provided in FASE 0 Q9 -->` in its place.
+
+The `conversion.html` snippet has a `{{CONVERSION_FALLBACK}}` slot that uses the same contact email:
+- Email provided → "Non vedi il calendario? Scrivici a `<a href="mailto:EMAIL">EMAIL</a>` e ti rispondiamo entro 24h."
+- Empty → emit `<!-- TODO: add contact email so a fallback line can be shown here -->`.
+
+**`href="#"` guard**: scan the output before writing — any `href="#"` that is **not** paired with both `class="disabled-link"` AND `data-todo` is an error. Internal anchors like `href="#convert"` or `href="#how-it-works"` are fine because they have an `id` target.
+
+## Cookie consent banner (M15)
+
+If FASE 0 Q10 = yes (default when the conversion embed is third-party — Calendly, SavvyCal, Cal.com, HubSpot, Tally, Typeform, or any HTML containing `<script src="https://`):
+
+1. Include the `cookie-banner.html` snippet immediately before `</body>` (after `{{SECTIONS}}`).
+2. Render the conversion embed with a consent gate:
+   - Place a static placeholder block:
+     ```html
+     <div class="calendly-placeholder" id="calendly-placeholder">
+         <i class="fa-solid fa-calendar-check" style="font-size:2.2rem; color: var(--primary);"></i>
+         <h3>Calendario di prenotazione</h3>
+         <p>Per caricare il calendario (Calendly) serve il tuo consenso sui cookie di terze parti. Accettalo nel banner in basso oppure scrivici: <a href="mailto:{{CONTACT_EMAIL}}">{{CONTACT_EMAIL}}</a></p>
+     </div>
+     ```
+   - Place an empty slot: `<div id="calendly-slot" data-embed-url="https://calendly.com/ACCOUNT/EVENT?...full URL with all query params..."></div>`
+   - The consent controller JS in `skeleton.html` reads `data-embed-url` and injects the widget + script only after the user accepts.
+
+3. If FASE 0 Q10 = no AND the conversion embed is third-party, emit `<!-- WARN: third-party embed without cookie banner — verify with the user this is intentional -->` near the embed.
+
+The `cookie-banner.html` snippet has these placeholders to fill (defaults in the snippet's HTML comment): `{{COOKIE_ARIA_LABEL}}`, `{{COOKIE_TITLE}}`, `{{COOKIE_TEXT}}`, `{{COOKIE_REJECT_LABEL}}`, `{{COOKIE_ACCEPT_LABEL}}`.
+
+**Disclaimer (chat-side, when concluding the run)**: tell the user this banner is a baseline — not iubenda/cookiebot enterprise compliance. For regulated industries (health, finance, broad EU consumer reach) recommend an enterprise CMP.
 
 ## Accessibility
 

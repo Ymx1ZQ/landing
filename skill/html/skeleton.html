@@ -8,6 +8,12 @@
     <meta property="og:title" content="{{OG_TITLE}}">
     <meta property="og:description" content="{{OG_DESCRIPTION}}">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="{{OG_URL}}">
+    <meta property="og:image" content="{{OG_IMAGE}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{OG_TITLE}}">
+    <meta name="twitter:description" content="{{OG_DESCRIPTION}}">
+    <meta name="twitter:image" content="{{OG_IMAGE}}">
     {{#GTM_HEAD}}
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -196,7 +202,58 @@
         .faq-item .faq-a { padding: 0 0 20px; color: var(--text-secondary); }
 
         /* Calendly wrapper */
-        .calendly-wrapper { max-width: 860px; margin: 48px auto 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.06); }
+        .calendly-wrapper { max-width: 860px; margin: 48px auto 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.06); background: #fff; position: relative; }
+        .calendly-placeholder {
+            min-height: 360px; padding: 56px 32px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; gap: 16px;
+            background: linear-gradient(180deg, #fff, #fafafb);
+        }
+        .calendly-placeholder h3 { color: var(--text-primary); font-size: 1.2rem; }
+        .calendly-placeholder p  { color: var(--text-secondary); max-width: 420px; }
+        .calendly-fallback {
+            text-align: center; margin-top: 24px;
+            color: var(--text-secondary); font-size: 0.92rem;
+        }
+        .calendly-fallback a { color: var(--primary); font-weight: 600; }
+        .calendly-fallback a:hover { text-decoration: underline; }
+
+        /* Disabled / placeholder links (footer Privacy/Terms when URL not provided) */
+        .disabled-link {
+            color: rgba(255,255,255,0.35); cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Cookie consent banner (M15) */
+        .cookie-banner {
+            position: fixed; left: 16px; right: 16px; bottom: 16px;
+            max-width: 720px; margin: 0 auto;
+            background: #1D1D1F; color: #fff;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.30);
+            padding: 18px 22px;
+            display: none;
+            z-index: 200;
+            font-size: 0.9rem; line-height: 1.5;
+        }
+        .cookie-banner.show { display: block; }
+        .cookie-banner-body { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+        .cookie-banner-text { flex: 1; min-width: 240px; color: rgba(255,255,255,0.85); }
+        .cookie-banner-text strong { color: #fff; }
+        .cookie-banner-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .cookie-btn {
+            padding: 9px 18px; border-radius: 999px;
+            border: none; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        .cookie-btn:hover { transform: translateY(-1px); }
+        .cookie-btn-accept  { background: var(--primary); color: #fff; }
+        .cookie-btn-reject  { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.85); }
+        @media (max-width: 768px) {
+            .cookie-banner-actions { width: 100%; }
+            .cookie-btn { flex: 1; }
+        }
 
         /* Final CTA */
         .final-cta {
@@ -313,6 +370,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         }, { threshold: 0.4 });
         counters.forEach(el => io.observe(el));
+    })();
+
+    // Cookie consent controller (M15) — gates third-party embeds (Calendly etc.).
+    // No-op when no .cookie-banner is present (i.e., the cookie-banner snippet wasn't included).
+    (function() {
+        const KEY = 'landing_cookie_consent_v1';
+        const banner = document.getElementById('cookie-banner');
+        if (!banner) return; // banner not included for this page; nothing to do
+
+        const acceptBtn = document.getElementById('cookie-accept');
+        const rejectBtn = document.getElementById('cookie-reject');
+        const placeholder = document.getElementById('calendly-placeholder');
+        const slot = document.getElementById('calendly-slot');
+
+        // loadThirdPartyEmbeds() — called when the user accepts.
+        // The /landing html stage fills CONVERSION_EMBED with either:
+        //   (a) the verbatim Calendly inline-widget block (banner OFF), or
+        //   (b) a placeholder + <div id="calendly-slot"></div> (banner ON).
+        // This function handles case (b): inject the widget + script into the slot.
+        function loadThirdPartyEmbeds() {
+            if (!slot || slot.dataset.loaded === '1') return;
+            const tpl = slot.getAttribute('data-embed-url');
+            if (!tpl) return;
+            slot.dataset.loaded = '1';
+            const widget = document.createElement('div');
+            widget.className = 'calendly-inline-widget';
+            widget.setAttribute('data-url', tpl);
+            widget.setAttribute('style', 'min-width:320px;height:700px;');
+            slot.appendChild(widget);
+            const script = document.createElement('script');
+            script.src = 'https://assets.calendly.com/assets/external/widget.js';
+            script.async = true;
+            document.body.appendChild(script);
+            if (placeholder) placeholder.style.display = 'none';
+        }
+
+        const consent = localStorage.getItem(KEY);
+        if (consent === 'accepted')      { loadThirdPartyEmbeds(); banner.classList.remove('show'); }
+        else if (consent === 'rejected') { banner.classList.remove('show'); }
+        else                              { banner.classList.add('show'); }
+
+        if (acceptBtn) acceptBtn.addEventListener('click', () => {
+            localStorage.setItem(KEY, 'accepted');
+            loadThirdPartyEmbeds();
+            banner.classList.remove('show');
+        });
+        if (rejectBtn) rejectBtn.addEventListener('click', () => {
+            localStorage.setItem(KEY, 'rejected');
+            banner.classList.remove('show');
+        });
     })();
 </script>
 

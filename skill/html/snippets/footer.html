@@ -5,10 +5,23 @@
             <span>{{BRAND_NAME}}</span>
         </div>
         <div class="footer-links">
-            <a href="#">{{FOOTER_LINK_1}}</a>
-            <a href="#">{{FOOTER_LINK_2}}</a>
-            <a href="#">{{FOOTER_LINK_3}}</a>
+            {{PRIVACY_LINK}}
+            {{TERMS_LINK}}
+            {{CONTACT_LINK}}
         </div>
         <div>&copy; {{FOOTER_YEAR}} {{BRAND_NAME}}. {{FOOTER_RIGHTS}}</div>
     </div>
 </footer>
+
+<!--
+  Footer-link rendering rules (filled by /landing html based on FASE 0 Q7-Q9):
+
+  PRIVACY_LINK / TERMS_LINK:
+    - If URL provided          → <a href="{{URL}}">Privacy</a>     (or Termini)
+    - If empty                 → <a href="#" class="disabled-link" aria-disabled="true" data-todo="privacy-url-pending">Privacy (in arrivo)</a>
+    - NEVER emit a bare href="#" without data-todo + aria-disabled.
+
+  CONTACT_LINK:
+    - If email provided        → <a href="mailto:{{EMAIL}}">Contatti</a>
+    - If empty                 → omit the link AND emit <!-- TODO: contact email not provided in FASE 0 Q9 --> comment in its place.
+-->

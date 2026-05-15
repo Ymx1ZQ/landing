@@ -317,3 +317,89 @@ Note: no git remote configured — commits stay local. Push steps will be skippe
 - Downstream `copy/prompt.md` is intentionally not updated in this plan to consume the enriched ICP — separate future work. Existing `value-proposition.md` files (pre-M12) remain valid input for `/landing copy` (graceful absence of new fields).
 - The review critiques `copywriting.md` only; reviewing `index.html` is out of scope (HTML is a rendering of the same copy — critique the source, not the rendering).
 - The `value-proposition.md` already generated for the pilot client (under `<client-site-dir>/`) is pre-M12 — after this plan ships it can either be retrofitted by hand or regenerated via `/landing vp`. Not blocking; out of scope of these milestones.
+
+### M14 — Footer URLs / Conversion fallback / `href="#"` guard
+
+**Why**: A UX review of the first landing produced by `/landing html` (the pilot client) flagged a class of preventable errors that the skill should catch upstream:
+1. `footer.html` ships with `href="#"` on Privacy / Terms / Contact — clicking them scrolls to top, which is embarrassing on a landing that talks GDPR.
+2. The Calendly embed has no textual fallback if blocked by ad-blocker / corporate firewall / JS off — the visitor sees empty space.
+3. The contact email is hard-coded as an `<a href="#">` placeholder in some snippet variants.
+These are fixable in the skill source so every future landing starts safe.
+
+**Approach**: Extend FASE 0 in `html/prompt.md` with three new questions (privacy URL, terms URL, contact email). Modify `footer.html` to use `{{PRIVACY_URL}}` / `{{TERMS_URL}}` / `{{CONTACT_EMAIL}}` placeholders. Modify `conversion.html` to append a textual fallback row using `{{CONTACT_EMAIL}}`. When a URL is empty the link renders disabled-styled ("Privacy (in arrivo)") with `aria-disabled="true"`; when contact email is empty, fall back to a TODO comment. Add a strict rule in `rules.md`: no `href="#"` in the output unless paired with `data-todo`.
+
+**Tasks**:
+- [x] Edit `skill/html/prompt.md` FASE 0: add Q7 (privacy URL), Q8 (terms URL), Q9 (contact email).
+- [x] Edit `skill/html/snippets/footer.html`: replace the 3 hardcoded `href="#"` with `{{PRIVACY_URL}}` / `{{TERMS_URL}}` / `{{CONTACT_EMAIL}}` placeholders; the contact link uses `mailto:`.
+- [x] Edit `skill/html/snippets/conversion.html`: append `<div class="calendly-fallback">Non vedi il calendario? Scrivici a {{CONTACT_EMAIL}}</div>` after the embed.
+- [x] Edit `skill/html/skeleton.html`: add CSS class `.calendly-fallback` (centered, secondary color) and `.disabled-link` styling for empty Privacy/Terms.
+- [x] Edit `skill/html/rules.md`: add hard rule "no `href=\"#\"` in output unless paired with `data-todo`; empty Privacy/Terms render as `aria-disabled` placeholder, never as live `#` links".
+- [x] Edit `tests/test_html.sh` (snippets pass): assert footer.html and conversion.html contain the new placeholders.
+- [x] Edit `tests/test_install.sh`: no new files, just verify install still passes.
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force`.
+- [x] Commit: `M14: footer URLs + conversion fallback + href guard ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; future `/landing html` runs ask the user for privacy/terms/contact email in FASE 0 and emit safe placeholders if not provided.
+
+---
+
+### M15 — Cookie consent banner snippet + FASE 0 question
+
+**Why**: Same UX review: the the pilot client landing was missing a cookie consent banner despite embedding Calendly (third-party cookies). A landing that sells GDPR cannot itself be GDPR-naive. The skill should default to including a minimal, honest banner when a third-party embed is detected.
+
+**Approach**: New snippet `cookie-banner.html` — a bottom-fixed minimal banner with two buttons ("Solo essenziali" / "Accetta tutti"), localStorage-backed consent memory, exposed `loadThirdPartyEmbeds()` JS hook the conversion embed can call. CSS + the JS consent controller go in `skeleton.html` (global). FASE 0 asks whether to include the banner; default is ON when the conversion input is a third-party booking URL or embed snippet. Disclaimer in the prompt: this banner is "not-completely-out-of-law" baseline, not iubenda/cookiebot enterprise-grade.
+
+**Tasks**:
+- [x] Create `skill/html/snippets/cookie-banner.html` with the markup (rejected/accept buttons, role=dialog).
+- [x] Edit `skill/html/skeleton.html`: add `.cookie-banner` CSS classes; add the consent controller JS at the end of the existing `<script>` block (localStorage key + `loadThirdPartyEmbeds()` hook).
+- [x] Edit `skill/html/snippets/conversion.html`: when the embed is third-party (Calendly etc.), render the `data-url` inside a `<div id="calendly-slot">` placeholder + a visible "Calendly placeholder" block; load the actual widget only after consent via the hook.
+- [x] Edit `skill/html/prompt.md` FASE 0: add Q10 (cookie banner: yes/no, default yes if third-party embed).
+- [x] Edit `skill/html/mapping.md`: add `cookie-banner` to the always-included list when Q10=yes; include after `<body>` open.
+- [x] Edit `skill/html/rules.md`: add rule "if conversion embed is third-party (Calendly/SavvyCal/Cal.com/HubSpot/Tally/Typeform) and cookie banner is OFF, emit `<!-- WARN: third-party embed without cookie banner -->`".
+- [x] Edit `tests/test_structure.sh`: add `assert_file "$SKILL/html/snippets/cookie-banner.html"`.
+- [x] Edit `tests/test_install.sh`: add `assert_file "$TARGET/html/snippets/cookie-banner.html"`.
+- [x] Edit `tests/test_html.sh`: assert skeleton contains cookie banner CSS class names and consent controller; assert cookie-banner snippet has both action buttons.
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force`.
+- [x] Commit: `M15: cookie consent banner snippet + third-party guard ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; the skill emits a cookie banner by default when a third-party booking embed is present, and Calendly loads only after consent.
+
+---
+
+### M16 — Open Graph image + Twitter card + canonical URL
+
+**Why**: The first the pilot client landing shipped without `og:image`, `og:url`, or any `twitter:card` tags. Sharing the link on LinkedIn/Discord/Slack/WhatsApp produces a barebones preview without an image — particularly bad when the whole product story is "we live inside the chats". The skill should require an OG image and canonical URL in FASE 0.
+
+**Approach**: Extend skeleton `<head>` with `{{OG_IMAGE}}`, `{{OG_URL}}`, `{{TWITTER_CARD}}`, `{{TWITTER_IMAGE}}` placeholders. FASE 0 asks for the canonical URL of the landing and the OG image path. If no OG image is given, fallback to the wide brand logo (when available) and emit a `<!-- TODO: og:image dovrebbe essere 1200x630 -->` warning comment in the HTML.
+
+**Tasks**:
+- [ ] Edit `skill/html/skeleton.html` `<head>`: add `<meta property="og:image">`, `<meta property="og:url">`, `<meta name="twitter:card" content="summary_large_image">`, `<meta name="twitter:image">`, `<meta name="twitter:title">`, `<meta name="twitter:description">` with their placeholders.
+- [x] Edit `skill/html/prompt.md` FASE 0: add Q11 (canonical URL) and Q12 (OG image path; default fallback to brand logo).
+- [x] Edit `skill/html/rules.md`: SEO/meta section — list og:image, og:url, twitter:card as mandatory; document fallback behavior.
+- [x] Edit `tests/test_html.sh`: assert skeleton contains `og:image`, `og:url`, `twitter:card` placeholder names.
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force`.
+- [x] Commit: `M16: OG image + twitter card + canonical URL in skeleton ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; the skeleton always emits a full set of social meta tags, and link previews on social platforms show an image.
+
+---
+
+### M17 — Copy quality rules: verbosity limits + CTA differentiation
+
+**Why**: The the pilot client copy needed a second-review pass to cut wall-of-text and one round of patching to differentiate the final CTA wording from the primary CTA. Both classes of error can be prevented at copy generation time.
+
+**Approach**: Add hard character-budget guidance in `copy/prompt.md`: hero subheadline ≤ 280 chars, feature card body ≤ 360 chars, FAQ answer ≤ 700 chars, body paragraphs in narrative sections ≤ 600 chars each. Add a "CTA differentiation" rule: when FINAL CTA and a conversion embed both appear on the page, FINAL CTA button text must differ from the hero primary CTA (avoid back-to-back "Book a demo" / "Book a demo"). Both rules are guidance for the generator, enforced as a self-check before writing `copywriting.md`.
+
+**Tasks**:
+- [x] Edit `skill/copy/prompt.md`: add a new section "Length budgets (self-check before writing)" listing the character limits per field.
+- [x] Edit `skill/copy/prompt.md`: add a new rule "CTA differentiation: FINAL CTA button text MUST differ visually from the hero primary CTA" with examples.
+- [x] Edit `skill/copy/template.md`: add an inline comment near FINAL CTA reminding the writer that the button wording must differ from the hero primary.
+- [x] Edit `tests/test_copy.sh`: assert the new rules are present (grep for "Length budgets", "CTA differentiation").
+- [x] Run `bash tests/test_all.sh` and confirm green.
+- [x] Run `./install.sh --force`.
+- [x] Commit: `M17: copy length budgets + CTA differentiation rule ✅`.
+
+**Done when**: `bash tests/test_all.sh` green; future `/landing copy` runs produce copy that respects the budgets and differentiates the final CTA from the hero primary.

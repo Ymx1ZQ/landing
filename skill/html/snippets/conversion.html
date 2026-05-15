@@ -7,5 +7,23 @@
         <div class="calendly-wrapper">
             {{CONVERSION_EMBED}}
         </div>
+        <div class="calendly-fallback">
+            {{CONVERSION_FALLBACK}}
+        </div>
     </div>
 </section>
+
+<!--
+  CONVERSION_EMBED rendering (built by /landing html based on FASE 0 Q1):
+    - Booking URL + cookie banner ON  → emit <div id="calendly-slot"></div>
+                                         + a static placeholder <div class="calendly-placeholder"> describing the consent gate
+                                         + the actual widget is injected by the consent-controller JS in skeleton.html when consent is given.
+    - Booking URL + cookie banner OFF → emit the verbatim inline-widget block directly (no consent gate).
+    - Raw HTML (form/iframe)          → paste verbatim.
+    - Empty                           → visual mock per the FINAL CTA framing.
+
+  CONVERSION_FALLBACK (built by /landing html based on FASE 0 Q9):
+    - Contact email provided  → "Non vedi il calendario? Scrivici a <a href=\"mailto:{{EMAIL}}\">{{EMAIL}}</a> e ti rispondiamo entro 24h."
+    - Empty                   → <!-- TODO: add contact email so a fallback line can be shown here -->
+                                 (or hide the .calendly-fallback wrapper entirely).
+-->

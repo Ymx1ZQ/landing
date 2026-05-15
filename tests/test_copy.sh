@@ -56,6 +56,9 @@ else
     g "$PROMPT" 'template\.md' "references template.md"
     # Language delegation
     g "$PROMPT" 'SKILL\.md|router|language rules' "delegates language"
+    # M17 — Length budgets + CTA differentiation
+    g "$PROMPT" '[Ll]ength budgets?'                       "M17 prompt: length budgets section"
+    g "$PROMPT" 'CTA differentiation|differ.*Hero.*[Pp]rimary' "M17 prompt: CTA differentiation rule"
 fi
 
 echo ""

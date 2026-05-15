@@ -128,7 +128,7 @@ A: [Answer framing price as investment / savings]
 [Final reminder of why to act now — urgency, scarcity, or simple momentum.]
 
 **Big CTA button:**
-[Button text — single, assertive, matches Primary CTA from hero]
+[Button text — single, assertive. MUST differ visually from the Hero Primary CTA (see "CTA differentiation" rule in prompt.md). Same intent, different register. Example: hero "Prenota una demo" → final "Parliamone" / "Vediamoci" / "Inizia ora".]
 
 **Microcopy under CTA:**
 [E.g., "No credit card required · Cancel any time · Setup in 5 minutes"]

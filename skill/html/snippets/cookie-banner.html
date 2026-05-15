@@ -1,0 +1,35 @@
+<!-- Cookie consent banner (M15) — minimal, localStorage-backed, gates third-party embeds -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="{{COOKIE_ARIA_LABEL}}">
+    <div class="cookie-banner-body">
+        <div class="cookie-banner-text">
+            <strong>{{COOKIE_TITLE}}</strong> {{COOKIE_TEXT}}
+        </div>
+        <div class="cookie-banner-actions">
+            <button class="cookie-btn cookie-btn-reject" id="cookie-reject" type="button">{{COOKIE_REJECT_LABEL}}</button>
+            <button class="cookie-btn cookie-btn-accept" id="cookie-accept" type="button">{{COOKIE_ACCEPT_LABEL}}</button>
+        </div>
+    </div>
+</div>
+
+<!--
+  Default copy when FASE 0 doesn't override (artifact language = Italian):
+    COOKIE_ARIA_LABEL  = "Consenso cookie"
+    COOKIE_TITLE       = "Cookie di terze parti."
+    COOKIE_TEXT        = "Per caricare il widget di prenotazione servono cookie di terze parti. I cookie tecnici essenziali sono sempre attivi. Puoi cambiare idea ricaricando la pagina."
+    COOKIE_REJECT_LABEL = "Solo essenziali"
+    COOKIE_ACCEPT_LABEL = "Accetta tutti"
+
+  English defaults:
+    COOKIE_ARIA_LABEL  = "Cookie consent"
+    COOKIE_TITLE       = "Third-party cookies."
+    COOKIE_TEXT        = "Loading the booking widget requires third-party cookies. Essential cookies are always on. You can change your mind by reloading the page."
+    COOKIE_REJECT_LABEL = "Essential only"
+    COOKIE_ACCEPT_LABEL = "Accept all"
+
+  Wiring (in skeleton.html):
+    - CSS classes (.cookie-banner, .cookie-banner-body, .cookie-banner-text, .cookie-banner-actions, .cookie-btn, .cookie-btn-accept, .cookie-btn-reject) live in skeleton.html.
+    - JS consent controller (localStorage key landing_cookie_consent_v1) + loadThirdPartyEmbeds() hook live in skeleton.html.
+    - The conversion.html snippet contains a placeholder <div id="calendly-slot"> that the controller fills only after consent.
+
+  Disclaimer: this banner is a baseline ("not-completely-out-of-law"), NOT iubenda/cookiebot enterprise compliance.
+-->

@@ -17,6 +17,7 @@ The assembled page uses this order. Missing sections are simply skipped — neve
 9. **conversion** (always) — `snippets/conversion.html`  · `id="convert"`, bg: `#FFFFFF`
 10. **final-cta** (always) — `snippets/final-cta.html`  · bg: `#1D1D1F` (dark)
 11. **footer** (always) — `snippets/footer.html`  · bg: `#1D1D1F` (dark)
+12. **cookie-banner** (conditional) — `snippets/cookie-banner.html` · fixed bottom, z-index 200 · injected last in the body. See "cookie-banner" rule below.
 
 ## Section recognition rules
 
@@ -72,7 +73,13 @@ For each section below, if the pattern is present in `copywriting.md`, include t
 - Dark background with radial glow. Button points to `#calendly`.
 
 ### footer → `footer.html` (always)
-- Brand name + copyright year + minimal link row (Privacy, Terms — placeholders, user fills in).
+- Brand name + copyright year + Privacy / Terms / Contact link row.
+- The three link placeholders (`{{PRIVACY_LINK}}`, `{{TERMS_LINK}}`, `{{CONTACT_LINK}}`) are filled per FASE 0 Q7-Q9 — see `rules.md` "Footer link rules (M14)". **Never emit bare `href="#"`.**
+
+### cookie-banner → `cookie-banner.html` (conditional)
+- Include if FASE 0 Q10 = yes (default when the conversion embed is third-party: Calendly, SavvyCal, Cal.com, HubSpot, Tally, Typeform, or any HTML containing `<script src="https://`).
+- Inject immediately before `</body>`, after `{{SECTIONS}}` (the banner is fixed-position; its DOM order is flexible).
+- When included, the conversion embed must use the consent-gate pattern (placeholder + `<div id="calendly-slot" data-embed-url="...">`) — see `rules.md` "Cookie consent banner (M15)".
 
 ## Icon mapping (sector hints)
 

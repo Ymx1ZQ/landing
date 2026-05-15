@@ -64,6 +64,9 @@ done
 assert_dir  "$SKILL/review"
 assert_file "$SKILL/review/prompt.md"
 
+# cookie-banner snippet (M15)
+assert_file "$SKILL/html/snippets/cookie-banner.html"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

@@ -227,6 +227,41 @@ g "$PROMPT" 'form|iframe|HTML' "prompt: detection — pasted HTML"
 g "$RULES" 'GTM|Google Tag Manager' "rules: covers GTM"
 g "$RULES" 'googletagmanager\.com' "rules: GTM loader URL"
 
+# M14 — FASE 0 expansion + footer/conversion placeholders + href guard
+g "$PROMPT" '[Pp]rivacy.*URL|URL.*[Pp]rivacy'                  "M14 prompt: FASE 0 privacy URL"
+g "$PROMPT" '[Tt]erms.*URL|URL.*[Tt]erms'                       "M14 prompt: FASE 0 terms URL"
+g "$PROMPT" '[Cc]ontact.*email|email.*[Cc]ontact'               "M14 prompt: FASE 0 contact email"
+g "$HTML_DIR/snippets/footer.html"     'PRIVACY_LINK'           "M14 footer: PRIVACY_LINK placeholder"
+g "$HTML_DIR/snippets/footer.html"     'TERMS_LINK'             "M14 footer: TERMS_LINK placeholder"
+g "$HTML_DIR/snippets/footer.html"     'CONTACT_LINK'           "M14 footer: CONTACT_LINK placeholder"
+g "$HTML_DIR/snippets/conversion.html" 'CONVERSION_FALLBACK'    "M14 conversion: CONVERSION_FALLBACK placeholder"
+g "$RULES" 'disabled-link|aria-disabled'                        "M14 rules: disabled-link / aria-disabled guard"
+g "$RULES" 'data-todo'                                          "M14 rules: data-todo guard"
+g "$SKEL"  'disabled-link'                                      "M14 skeleton: .disabled-link CSS"
+g "$SKEL"  'calendly-fallback'                                  "M14 skeleton: .calendly-fallback CSS"
+
+# M15 — Cookie consent banner
+g "$PROMPT" '[Cc]ookie.*banner|[Cc]ookie.*consent'              "M15 prompt: FASE 0 cookie banner"
+[ -f "$HTML_DIR/snippets/cookie-banner.html" ] && { echo "  PASS: M15 snippet cookie-banner.html exists"; PASS=$((PASS+1)); } || { echo "  FAIL: M15 snippet cookie-banner.html missing"; FAIL=$((FAIL+1)); }
+g "$HTML_DIR/snippets/cookie-banner.html" 'cookie-banner'       "M15 cookie-banner: .cookie-banner class"
+g "$HTML_DIR/snippets/cookie-banner.html" 'cookie-accept'       "M15 cookie-banner: accept button"
+g "$HTML_DIR/snippets/cookie-banner.html" 'cookie-reject'       "M15 cookie-banner: reject button"
+g "$SKEL"   'cookie-banner'                                     "M15 skeleton: .cookie-banner CSS"
+g "$SKEL"   'cookie-btn-accept|cookie-btn-reject'               "M15 skeleton: .cookie-btn-* CSS"
+g "$SKEL"   'landing_cookie_consent_v1|cookie_consent_v1'        "M15 skeleton: localStorage key"
+g "$SKEL"   'loadThirdPartyEmbeds|data-embed-url'               "M15 skeleton: consent gate JS hook"
+g "$RULES"  'cookie-banner|cookie consent|cookie banner'        "M15 rules: cookie banner section"
+g "$MAPPING" 'cookie-banner'                                    "M15 mapping: cookie-banner row"
+
+# M16 — Open Graph image + Twitter card + canonical URL
+g "$SKEL"  'og:image'                                           "M16 skeleton: og:image"
+g "$SKEL"  'og:url'                                             "M16 skeleton: og:url"
+g "$SKEL"  'twitter:card'                                       "M16 skeleton: twitter:card"
+g "$SKEL"  'twitter:image|TWITTER_IMAGE'                        "M16 skeleton: twitter:image"
+g "$PROMPT" 'canonical|og:url|landing.*URL'                     "M16 prompt: FASE 0 canonical URL"
+g "$PROMPT" 'Open Graph|og:image|OG image'                      "M16 prompt: FASE 0 OG image"
+g "$RULES"  'og:image'                                          "M16 rules: og:image mandatory"
+
 echo ""
 echo "=== Results: $PASS passed, $FAIL failed ==="
 [ "$FAIL" -eq 0 ]

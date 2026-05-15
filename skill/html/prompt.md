@@ -59,6 +59,25 @@ Before I build your landing page, I need:
    → Only affects micro-copy choices, not structure.
 
 6. 🔗 **Existing site or logo** for visual reference? (optional)
+
+7. ⚖️ **Privacy policy URL** (e.g. https://yourdomain.com/privacy)
+   → If empty, the footer link renders as a disabled-styled "Privacy (coming soon)" placeholder with `aria-disabled="true"` — never as a live `href="#"`.
+
+8. 📜 **Terms of service URL** (e.g. https://yourdomain.com/terms)
+   → Same fallback as Privacy.
+
+9. ✉️ **Contact email** (e.g. info@yourdomain.com)
+   → Used in the footer "Contact" link AND as the fallback line under the conversion embed ("Can't see the calendar? Write to …"). If empty, fallback shows a TODO HTML comment and no live link.
+
+10. 🍪 **Cookie consent banner?** (yes / no)
+    → Default: **yes** if the conversion embed is a third-party widget (Calendly, SavvyCal, Cal.com, HubSpot, Tally, Typeform) or any HTML containing `<script src="https://`.
+    → The banner is minimal (Accept all / Essential only), localStorage-backed, and gates the loading of the third-party embed until consent. NOT iubenda/cookiebot enterprise-grade — flag this to the user if they are in a regulated industry.
+
+11. 🌐 **Canonical URL of the landing** (e.g. https://example.com/) — for `og:url` and link previews on LinkedIn/Discord/Slack/WhatsApp.
+
+12. 🖼️ **Open Graph image** — file path (e.g. `./og-image.png`) or URL.
+    → Optimal size 1200×630px (Facebook/LinkedIn) or 1200×675 (Twitter summary_large_image).
+    → If empty AND a wide brand logo was provided in Q6, fallback to that path with a `<!-- TODO: og:image should be 1200x630 -->` HTML comment. If neither is available, emit a TODO comment in `<head>` and skip the meta tag value.
 ```
 
 If the user says "go" / "use defaults", proceed with the defaults. Otherwise wait for the answers.

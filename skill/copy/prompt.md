@@ -73,6 +73,35 @@ The hero has **two CTAs**:
 
 The FINAL CTA stays single and assertive.
 
+### CTA differentiation (M17)
+The Hero **Primary CTA**, the **Conversion section** title, and the **Final CTA** button **must not all read identically**. When all three converge (typical for a booking-framed page that hosts an inline calendar widget) the reader sees the same phrase 3–4 times in close visual succession ("Prenota una demo" → "Prenota una demo" → "Prenota una demo") — produces déjà-vu and weakens the page.
+
+Concrete rule:
+- **Final CTA button text** must differ visually from the Hero Primary CTA text. Keep the same *intent* (booking / contact), change the *register*.
+- Example pairs:
+  - Hero primary "Book a demo" → Final CTA "Let's talk" / "Start here" / "See it live"
+  - Hero primary "Get in touch" → Final CTA "Send a message" / "Reach out"
+  - Hero primary "Prenota una demo" → Final CTA "Parliamone" / "Vediamoci" / "Inizia ora"
+- Apply this when writing `copywriting.md`; flag with a TODO at the bottom if the user pre-specified the same text for both.
+
+### Length budgets — self-check before writing (M17)
+Before emitting `copywriting.md`, run a length self-check against these soft budgets. If a field exceeds the budget, rewrite tighter or split into bullets. The goal is to avoid wall-of-text on the rendered page.
+
+| Field | Soft cap (characters, no whitespace stripping) |
+|---|---|
+| Hero subheadline | ≤ 280 |
+| Setup body paragraph (intro before the bullets) | ≤ 220 |
+| Each Setup pain bullet | ≤ 220 |
+| Shift body paragraph | ≤ 700 (single paragraph is enough; if you need a second, the POV is wandering) |
+| Solution body | ≤ 500 |
+| Each Feature card "Benefit" | ≤ 360 |
+| Each Feature card "Inline objection handling" | ≤ 300 |
+| Each FAQ answer | ≤ 700 |
+| Conversion section sub-copy (under "Book a demo") | ≤ 240 |
+| Final CTA subheadline | ≤ 200 |
+
+These caps are **soft**: if the user's value proposition explicitly demands more (e.g. a regulated industry whose claim needs a longer disclaimer), exceed the cap and surface a one-line TODO at the bottom of `copywriting.md` noting which field overran and why. Never silently truncate user-meaningful content; do silently trim filler.
+
 ### Framing: booking vs contact
 The **conversion mechanism** the user ends up with changes the language across the whole page. In PHASE 1, ask which one applies (see `questions.md` Q7):
 
