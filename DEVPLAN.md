@@ -1,5 +1,7 @@
 # DEVPLAN — `landing` skill
 
+**Archive:** M1-M6 and M18 (7 closed milestones) are archived to `DEVPLAN-ARCHIVE.md` (the sha is the pointer to full detail).
+
 ## Goal
 
 Build a single Claude Code skill named `landing` exposing three subcommands (`vp`, `copy`, `html`) via runtime routing. Each subcommand produces a file artifact that feeds the next one, forming a pipeline: `value-proposition.md` → `copywriting.md` → `index.html`.
@@ -110,56 +112,6 @@ The original prompts were ported from earlier gems. These improvements, based on
 - FASE 0 setup questions (Calendly, primary color, CTA text, tone, theme) preserved — they fire first regardless of chat language.
 
 ## Milestones
-
-### M1 — Scaffold directory structure ✅
-- [x] Create `skill/` with subfolders `vp/`, `copy/`, `html/`, `html/snippets/`.
-- [x] Create empty placeholder files per the layout.
-- [x] Verify tree matches.
-
-**Deviations:** No git remote was configured at the time; commits stayed local and push steps were skipped.
-
-### M2 — `SKILL.md` (routing + language rules) ✅
-- [x] Frontmatter: `name: landing`, `description: <trigger covering vp/copy/html pipeline>`.
-- [x] Language rules block.
-- [x] Routing table with 3 branches + menu fallback.
-- [x] Note on artifact pipeline (input filename expected in CWD per step).
-- [x] Keep short — heavy content lives in subcommand prompts.
-
-### M3 — `vp/prompt.md` ✅
-- [x] Port the inline "Value Proposition Architect" prompt as the base.
-- [x] Add **Positioning Foundations** interview block (5 fields).
-- [x] Add **Segments** discovery (multi-segment → pick primary).
-- [x] Add **Point of View** block.
-- [x] Rewrite the output template to include: Positioning, POV, Segment(s), VP, Problem, Solution, Benefits, Target Users, MVP Scope, Constraints.
-- [x] Enforce filename: output must be `value-proposition.md` in CWD.
-- [x] Remove hardcoded Italian chat references → point to SKILL.md.
-- [x] Remove external pipeline references (standalone skill).
-
-### M4 — `copy/` (Dunford landing copy) ✅
-- [x] `prompt.md`: port `landing-bot/system_prompt.md` — Dunford narrative (Insight → Alternatives → Perfect World → Introduction → Differentiated Value → Proof → Ask), PHASE 1/2 process.
-- [x] `prompt.md`: add **named value buckets** rule (3 themed pillars, 1-3 features each).
-- [x] `prompt.md`: add **specificity** rule (numeric claims when plausible).
-- [x] `prompt.md`: add **headline variants** requirement (2-3 options + rationale).
-- [x] `prompt.md`: add **contextual objections** + **CTA hierarchy** rules.
-- [x] `prompt.md`: declare input = `value-proposition.md` in CWD; output = `copywriting.md` in CWD.
-- [x] `prompt.md`: delegate language to SKILL.md.
-- [x] `questions.md`: port `landing-bot/questions.md` (5 discovery questions) + add segment-confirmation question.
-- [x] `template.md`: port `landing-bot/template.md` (HERO → SETUP → SHIFT → SOLUTION → VALUE PROPOSITION → SOCIAL PROOF → FAQ → FINAL CTA); update pillars to named buckets; add headline-variants block; add secondary CTA slot on hero.
-
-### M5 — `html/` (assembly-based HTML generator) ✅
-- [x] `prompt.md`: rewrite as assembly instructions — load `skeleton.html`, select matching `snippets/*.html`, fill placeholders from `copywriting.md`.
-- [x] `prompt.md`: declare input = `copywriting.md` in CWD + FASE 0 setup answers; output = `index.html` in CWD.
-- [x] `prompt.md`: preserve FASE 0 setup questions (Calendly, primary color, CTA text, tone, existing site/logo — 5 original questions).
-- [x] `mapping.md`: port `landing-html-gen/mapping-markdown-to-sections.md` — update to reference snippets explicitly.
-- [x] `rules.md`: port `landing-html-gen/output-rules.md` — add SEO/meta checklist, accessibility checklist.
-- [x] `skeleton.html`: write the full HTML shell — `<head>` with meta/SEO placeholders, `<style>` with `:root` variables, base typography, section alternation CSS, `.illustration-placeholder` CSS, dark-section rules, `<script>` with smooth scroll, counter animation, reveal on scroll, nav-scroll class toggle.
-- [x] `snippets/*.html`: write one file per section with `{{PLACEHOLDER}}` markers for copy. Each snippet is self-contained (no cross-references).
-
-### M6 — `install.sh` + `README.md` ✅
-- [x] Adapt `devplan/install.sh` to a single-target install: source `skill/` → dest `~/.claude/skills/landing/`.
-- [x] Keep local/remote detection, `--force`, `--help`.
-- [x] Print post-install summary with the three `/landing <cmd>` invocations and the pipeline order.
-- [x] `README.md`: overview, install command, pipeline explanation (`vp → copy → html`), language rule summary.
 
 ### M7 — Smoke test ✅ (automated portion)
 - [x] `bash install.sh --force` → `~/.claude/skills/landing/` populated with SKILL.md + all subcommand files + 12 snippets (verified).
@@ -406,14 +358,17 @@ These are fixable in the skill source so every future landing starts safe.
 
 ---
 
-### M18 — Devplan hygiene pass (forge-flow Comments + Milestone state markers compliance) ✅
 
-**Why**: forge-flow's Comments directive keeps prose off closed task boxes; the Milestone state markers directive keeps `🔄`/`- [~]` for active work only. M1 carried a stray note outside any Deviations block.
+### M19 — Archive closed milestones (M1-M6, M18) to `DEVPLAN-ARCHIVE.md` ✅
 
-**Approach**: Grep all source files for comment-hygiene violations (incident narrative, markdown/emoji in inline comments, restated test assertions) — repo came back clean. Audit DEVPLAN.md for dangling markers, stray prose under checked tasks, oversized Notes/Deviations, and size-budget overruns; move the one stray M1 note into a bounded Deviations block.
+**Why**: The active plan carried 7 closed milestones worth of finished work that nothing reads once shipped; the detail already lives in the commit that closed each one.
+
+**Approach**: Verify every closed milestone's commit resolves (`git cat-file -e`) against the CURRENT git log (this repo's history was force-rewritten today, so no sha is copied from the plan text), then compress each to `MNN | title | date | sha` in `DEVPLAN-ARCHIVE.md`. M7 and M8 carry a done marker but have unticked tasks, so they stay active and are reported, not archived. M9-M17 carry no done marker and stay active regardless of task state.
 
 **Tasks**:
-- [x] Grep `.sh`/`.py`/`.ts`/`.js` etc. for comment-hygiene violations — none found.
-- [x] Move M1's stray prose note into a `**Deviations:**` block.
+- [x] Verify each closed milestone's commit against the current git log and write `DEVPLAN-ARCHIVE.md`
+- [x] Strip the archived blocks from `DEVPLAN.md`, leaving one pointer line
+- [x] Diff the ID sets before/after archiving to prove nothing was lost
+- [x] Run `bash tests/test_all.sh` and commit & push
 
-**Done when**: no prose sits outside a Deviations/Notes block under a completed task list, and no dangling `🔄`/`- [~]` markers remain.
+**Done when**: `bash tests/test_all.sh` green; `DEVPLAN.md` holds only the pointer plus M7-M17; `DEVPLAN-ARCHIVE.md` holds the 7 compressed lines; the ID-set diff between before and after is empty. ✅ Verified: 38 passed, 0 failed; ID-set diff empty.
