@@ -116,7 +116,7 @@ The original prompts were ported from earlier gems. These improvements, based on
 - [x] Create empty placeholder files per the layout.
 - [x] Verify tree matches.
 
-Note: no git remote configured — commits stay local. Push steps will be skipped; user can add a remote later.
+**Deviations:** No git remote was configured at the time; commits stayed local and push steps were skipped.
 
 ### M2 — `SKILL.md` (routing + language rules) ✅
 - [x] Frontmatter: `name: landing`, `description: <trigger covering vp/copy/html pipeline>`.
@@ -403,3 +403,17 @@ These are fixable in the skill source so every future landing starts safe.
 - [x] Commit: `M17: copy length budgets + CTA differentiation rule ✅`.
 
 **Done when**: `bash tests/test_all.sh` green; future `/landing copy` runs produce copy that respects the budgets and differentiates the final CTA from the hero primary.
+
+---
+
+### M18 — Devplan hygiene pass (forge-flow Comments + Milestone state markers compliance) ✅
+
+**Why**: forge-flow's Comments directive keeps prose off closed task boxes; the Milestone state markers directive keeps `🔄`/`- [~]` for active work only. M1 carried a stray note outside any Deviations block.
+
+**Approach**: Grep all source files for comment-hygiene violations (incident narrative, markdown/emoji in inline comments, restated test assertions) — repo came back clean. Audit DEVPLAN.md for dangling markers, stray prose under checked tasks, oversized Notes/Deviations, and size-budget overruns; move the one stray M1 note into a bounded Deviations block.
+
+**Tasks**:
+- [x] Grep `.sh`/`.py`/`.ts`/`.js` etc. for comment-hygiene violations — none found.
+- [x] Move M1's stray prose note into a `**Deviations:**` block.
+
+**Done when**: no prose sits outside a Deviations/Notes block under a completed task list, and no dangling `🔄`/`- [~]` markers remain.
