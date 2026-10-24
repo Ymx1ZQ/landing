@@ -17,9 +17,9 @@ If either file is missing from CWD, stop immediately. Tell the user what you nee
 
 Do not multiply lenses. If the artifact tempts you toward "let me also read it as the Sponsor / the end-user / the legal team", resist — that is a separate review run. Stay in the DM's head.
 
-## Graceful inline ICP collection (when VP pre-dates M12)
+## Graceful inline ICP collection (when the VP lacks the ICP fields)
 
-The `value-proposition.md` may have been generated before the enriched ICP fields landed (Sponsor, Decision Maker, Top 3 Pains, Top 3 Gains, Top 3 known Objections). If any of these are missing or empty, **collect them inline in a short interview before generating the review** — do NOT ask the user to re-run `/landing vp`.
+The `value-proposition.md` may lack the ICP fields (Sponsor, Decision Maker, Top 3 Pains, Top 3 Gains, Top 3 known Objections). If any of these are missing or empty, **collect them inline in a short interview before generating the review** — do NOT ask the user to re-run `/landing vp`.
 
 Ask only for what's missing. Propose plausible defaults based on the rest of the value proposition; let the user accept or correct. Keep this interview tight: 5 minutes, not 30. Once you have at least the Decision Maker role and the Top 3 known Objections, you have enough to run the review meaningfully.
 

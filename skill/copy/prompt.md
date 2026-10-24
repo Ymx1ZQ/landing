@@ -73,7 +73,7 @@ The hero has **two CTAs**:
 
 The FINAL CTA stays single and assertive.
 
-### CTA differentiation (M17)
+### CTA differentiation
 The Hero **Primary CTA**, the **Conversion section** title, and the **Final CTA** button **must not all read identically**. When all three converge (typical for a booking-framed page that hosts an inline calendar widget) the reader sees the same phrase 3–4 times in close visual succession ("Prenota una demo" → "Prenota una demo" → "Prenota una demo") — produces déjà-vu and weakens the page.
 
 Concrete rule:
@@ -84,7 +84,7 @@ Concrete rule:
   - Hero primary "Prenota una demo" → Final CTA "Parliamone" / "Vediamoci" / "Inizia ora"
 - Apply this when writing `copywriting.md`; flag with a TODO at the bottom if the user pre-specified the same text for both.
 
-### Length budgets — self-check before writing (M17)
+### Length budgets — self-check before writing
 Before emitting `copywriting.md`, run a length self-check against these soft budgets. If a field exceeds the budget, rewrite tighter or split into bullets. The goal is to avoid wall-of-text on the rendered page.
 
 | Field | Soft cap (characters, no whitespace stripping) |

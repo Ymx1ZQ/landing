@@ -112,7 +112,7 @@ The `<head>` must always include:
 
 Do not synthesize false metadata — extract from the copy.
 
-## Footer link rules (M14)
+## Footer link rules
 
 The footer snippet has three placeholders — `{{PRIVACY_LINK}}`, `{{TERMS_LINK}}`, `{{CONTACT_LINK}}` — that you fill at assembly time based on FASE 0 Q7-Q9.
 
@@ -126,7 +126,7 @@ The `conversion.html` snippet has a `{{CONVERSION_FALLBACK}}` slot that uses the
 
 **`href="#"` guard**: scan the output before writing — any `href="#"` that is **not** paired with both `class="disabled-link"` AND `data-todo` is an error. Internal anchors like `href="#convert"` or `href="#how-it-works"` are fine because they have an `id` target.
 
-## Cookie consent banner (M15)
+## Cookie consent banner
 
 If FASE 0 Q10 = yes (default when the conversion embed is third-party — Calendly, SavvyCal, Cal.com, HubSpot, Tally, Typeform, or any HTML containing `<script src="https://`):
 

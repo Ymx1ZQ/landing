@@ -74,12 +74,12 @@ For each section below, if the pattern is present in `copywriting.md`, include t
 
 ### footer → `footer.html` (always)
 - Brand name + copyright year + Privacy / Terms / Contact link row.
-- The three link placeholders (`{{PRIVACY_LINK}}`, `{{TERMS_LINK}}`, `{{CONTACT_LINK}}`) are filled per FASE 0 Q7-Q9 — see `rules.md` "Footer link rules (M14)". **Never emit bare `href="#"`.**
+- The three link placeholders (`{{PRIVACY_LINK}}`, `{{TERMS_LINK}}`, `{{CONTACT_LINK}}`) are filled per FASE 0 Q7-Q9 — see `rules.md` "Footer link rules". **Never emit bare `href="#"`.**
 
 ### cookie-banner → `cookie-banner.html` (conditional)
 - Include if FASE 0 Q10 = yes (default when the conversion embed is third-party: Calendly, SavvyCal, Cal.com, HubSpot, Tally, Typeform, or any HTML containing `<script src="https://`).
 - Inject immediately before `</body>`, after `{{SECTIONS}}` (the banner is fixed-position; its DOM order is flexible).
-- When included, the conversion embed must use the consent-gate pattern (placeholder + `<div id="calendly-slot" data-embed-url="...">`) — see `rules.md` "Cookie consent banner (M15)".
+- When included, the conversion embed must use the consent-gate pattern (placeholder + `<div id="calendly-slot" data-embed-url="...">`) — see `rules.md` "Cookie consent banner".
 
 ## Icon mapping (sector hints)
 

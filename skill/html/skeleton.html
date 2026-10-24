@@ -224,7 +224,7 @@
             pointer-events: none;
         }
 
-        /* Cookie consent banner (M15) */
+        /* Cookie consent banner */
         .cookie-banner {
             position: fixed; left: 16px; right: 16px; bottom: 16px;
             max-width: 720px; margin: 0 auto;
@@ -372,7 +372,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         counters.forEach(el => io.observe(el));
     })();
 
-    // Cookie consent controller (M15) — gates third-party embeds (Calendly etc.).
+    // Cookie consent controller — gates third-party embeds (Calendly etc.).
     // No-op when no .cookie-banner is present (i.e., the cookie-banner snippet wasn't included).
     (function() {
         const KEY = 'landing_cookie_consent_v1';

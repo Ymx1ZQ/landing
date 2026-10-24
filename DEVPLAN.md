@@ -372,3 +372,15 @@ These are fixable in the skill source so every future landing starts safe.
 - [x] Run `bash tests/test_all.sh` and commit & push
 
 **Done when**: `bash tests/test_all.sh` green; `DEVPLAN.md` holds only the pointer plus M7-M17; `DEVPLAN-ARCHIVE.md` holds the 7 compressed lines; the ID-set diff between before and after is empty. ✅ Verified: 38 passed, 0 failed; ID-set diff empty.
+
+### M20 — Prompts carry no milestone references ✅
+
+**Why**: every file under `skill/` is read by the model when a route runs; a tag like `(M14)` in a heading costs tokens on every call and tells the executor nothing. The history lives here and in the commits. Same rule as `fv-scout` M323.
+
+**Tasks**:
+- [x] `html/rules.md`, `html/mapping.md`, `copy/prompt.md`: drop `(M14)`, `(M15)`, `(M17)` from headings and from the two cross-references that quote them
+- [x] `review/prompt.md`: the ICP-collection section says which fields a VP may lack, not which milestone added them
+- [x] `html/skeleton.html` and `html/snippets/cookie-banner.html`: drop `(M15)` from the comments, which are copied into every generated page
+- [x] Run `bash tests/test_all.sh` and commit & push
+
+**Done when**: `grep -rnE '\bM[0-9]{1,3}\b' skill --include='*.md'` prints nothing; `bash tests/test_all.sh` green. ✅ Verified: 158 passed, 0 failed; grep empty over `skill/` (`.md` and `.html`).
