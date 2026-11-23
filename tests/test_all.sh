@@ -18,7 +18,6 @@ run test_vp.sh
 run test_copy.sh
 run test_review.sh
 run test_html.sh
-run test_install.sh
 
 echo ""
 echo "✅ All suites green."

@@ -384,3 +384,16 @@ These are fixable in the skill source so every future landing starts safe.
 - [x] Run `bash tests/test_all.sh` and commit & push
 
 **Done when**: `grep -rnE '\bM[0-9]{1,3}\b' skill --include='*.md'` prints nothing; `bash tests/test_all.sh` green. ✅ Verified: 158 passed, 0 failed; grep empty over `skill/` (`.md` and `.html`).
+
+### M21 — The repo distributes the skill as a plain folder ✅
+
+**Why**: `install.sh` only copied `skill/` to `~/.claude/skills/landing/`, plus `--force` and remote-curl wrappers. A plain folder copy does the same for every assistant that reads `SKILL.md` folders, and a remote one-liner pulled a moving branch.
+
+**Approach**: Remove the installer and its suite, document the copy route per assistant, the Codex skill installer pinned to a tag or commit, and an update procedure.
+
+**Tasks**:
+- [x] Remove `install.sh` and `tests/test_install.sh`; drop the suite from `tests/test_all.sh`
+- [x] Rewrite the README Install section; fix the layout and test lists
+- [x] Run `bash tests/test_all.sh` and commit & push
+
+**Done when**: `grep -rn 'install.sh' README.md tests` prints nothing; `bash tests/test_all.sh` green. ✅ Verified.

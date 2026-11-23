@@ -6,21 +6,26 @@ The copy stage follows April Dunford's *Sales Pitch* framework (*Insight → Alt
 
 ## Install
 
-### Local (from this repo)
+`skill/` is the whole skill: one flat folder that follows the common `SKILL.md` layout. The installed skill is named `landing` (the `name:` in `skill/SKILL.md`), so copy `skill/` to a folder called `landing` where your assistant reads skills.
 
 ```bash
-bash install.sh
+git clone https://github.com/OWNER/landing.git
+cp -r landing/skill ~/.claude/skills/landing            # Claude Code
+cp -r landing/skill ~/.gemini/skills/landing            # Gemini CLI
+cp -r landing/skill ~/.config/opencode/skills/landing   # opencode
 ```
 
-Use `--force` to overwrite an existing installation without a prompt.
+For Codex, its skill installer takes the GitHub path directly; pin a tag or a commit instead of `main`, because a moving branch changes the instructions the assistant follows:
 
-### Remote (no clone)
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/OWNER/landing/main/install.sh)
+```
+$skill-installer install OWNER/landing/tree/<tag-or-commit>/skill
 ```
 
-Both modes land at `~/.claude/skills/landing/`. Restart Claude Code to pick up the skill.
+A manual Codex copy goes in `~/.agents/skills/landing`. Keep one active copy per assistant, and restart the assistant to pick up the skill.
+
+**Update.** Save any local edits, then replace the whole installed folder with the new one. `diff -r landing/skill <installed folder>` shows whether a copy has drifted from the source.
+
+**Not provided.** There is no installer script, no remote one-liner and no target wrappers; earlier versions had them.
 
 ## Usage
 
@@ -50,7 +55,7 @@ Run the four subcommands from your project directory. The first three form the b
 ## Repo layout
 
 ```
-skill/                      # copied to ~/.claude/skills/landing/ by install.sh
+skill/                      # copied to a folder named landing in the assistant's skills directory
 ├── SKILL.md                # router + language rules
 ├── vp/prompt.md            # positioning architect (Dunford + JTBD + USP Venn + enriched ICP)
 ├── copy/                   # Dunford copywriter
@@ -66,8 +71,7 @@ skill/                      # copied to ~/.claude/skills/landing/ by install.sh
 └── review/                 # buyer-eyes copy review
     └── prompt.md           # Decision Maker lens, three-section critique
 
-install.sh                  # local + remote installer
-tests/                      # bash test suite (runs structure, content, install)
+tests/                      # bash test suite (runs structure and content suites)
 DEVPLAN.md                  # planned work, milestone-by-milestone
 ```
 
@@ -86,5 +90,4 @@ bash tests/test_vp.sh
 bash tests/test_copy.sh
 bash tests/test_review.sh
 bash tests/test_html.sh
-bash tests/test_install.sh
 ```
